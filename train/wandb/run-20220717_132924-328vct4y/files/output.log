@@ -1,0 +1,7 @@
+X_train shape:  torch.Size([2799])
+y_train shape:  torch.Size([2799])
+X_train dtype:  torch.float32
+y_train dtpye:  torch.float32
+torch.Size([2799])
+torch.Size([2799])
+TRAINING FINISHED

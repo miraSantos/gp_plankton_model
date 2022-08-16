@@ -1,0 +1,22 @@
+{
+    "os": "Linux-5.15.0-41-generic-x86_64-with-glibc2.35",
+    "python": "3.10.4",
+    "heartbeatAt": "2022-07-17T20:29:25.396534",
+    "startedAt": "2022-07-17T20:29:24.164844",
+    "docker": null,
+    "cpu_count": 8,
+    "cuda": null,
+    "args": [],
+    "state": "running",
+    "program": "/home/mira/PycharmProjects/gp_plankton_model/train/train_data.py",
+    "codePath": "train/train_data.py",
+    "git": {
+        "remote": "https://github.com/miraSantos/gp_plankton_model.git",
+        "commit": "4237b97bc89482340f1c0ad91e1989ebc804e38d"
+    },
+    "email": "miraflorista@gmail.com",
+    "root": "/home/mira/PycharmProjects/gp_plankton_model",
+    "host": "mira-lemur",
+    "username": "mira",
+    "executable": "/home/mira/anaconda3/envs/pyro/bin/python"
+}

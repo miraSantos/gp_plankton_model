@@ -17,8 +17,6 @@ import torch
 import pyro
 from pyro.contrib.timeseries import IndependentMaternGP, LinearlyCoupledMaternGP
 
-
-
 def download_data(data_path):
     """
     :param data_path(str): path to data
@@ -45,7 +43,7 @@ def create_daily_df(df):
     :param df(pandas.dataframe): dataframe
     :return: df with daily frequency
     """
-    #SETTING DAILY FREQUENCY TO DATA
+    #SETTING DAILY FREQUENCY TO DAT
     dfd = df.drop_duplicates(subset = "date").copy()
 
     print(dfd.shape)
