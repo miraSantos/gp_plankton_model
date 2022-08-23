@@ -19,7 +19,7 @@ from pyro.contrib.timeseries import IndependentMaternGP, LinearlyCoupledMaternGP
 
 def download_data(data_path):
     """
-    :param data_path(str): path to data
+    :param data_path(str): path to preprocess
     :return:
     """
     df = pd.read_csv(data_path) # .drop_duplicates(subset = "date") #remove duplicate days
@@ -48,7 +48,7 @@ def create_daily_df(df):
 
     print(dfd.shape)
 
-    # dfindexed = dfd.groupby(pd.PeriodIndex(data = dfd.date,freq = "D"))
+    # dfindexed = dfd.groupby(pd.PeriodIndex(preprocess = dfd.date,freq = "D"))
     dfd = dfd.set_index("date",inplace = False)
     dfd.head()
 
@@ -67,8 +67,8 @@ def create_daily_df(df):
 
 def interpolate(dataframe,column):
     """
-    :param dataframe(pandas.dataframe): dataframe with data
-    :param column (pandas data column):
+    :param dataframe(pandas.dataframe): dataframe with preprocess
+    :param column (pandas preprocess column):
     :return: dataframe(pandas.dataframe): augmented dataframe with interpolatio
     """
     #INTERPOLATION

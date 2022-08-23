@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="794a429b-e260-4a5d-a5a5-f119f0589492" name="slurm" url="http://127.0.0.1">
+        <fileTransfer mountedRoot="/dos" accessType="MOUNT" port="0" />
+      </webServer>
+    </option>
+  </component>
+</project>
