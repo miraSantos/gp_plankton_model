@@ -4,7 +4,8 @@ import torch
 import gpytorch
 import os
 from tqdm import tqdm
-from models import spectralGP_model,exactGP_model
+import yaml
+from models import spectralGP_model, exactGP_model
 
 import wandb  # library for tracking and visualization
 
@@ -56,7 +57,6 @@ def define_training_data(X, y, train_size, normalize=True):
     return X_train, y_train, X_test, y_test
 
 
-
 def train_model(likelihood, model, learning_rate=0.1):
     """
     :param likelihood:
@@ -84,9 +84,6 @@ def train_model(likelihood, model, learning_rate=0.1):
         optimizer.step()
 
 
-
-
-
 def plot_train_test_data(x_train, y_train, x_test, y_test):
     # wandb.log({"train_test_data": wandb.plot.line_series(
     #     xs=[x_train, x_test],
@@ -106,26 +103,28 @@ def plot_train_test_data(x_train, y_train, x_test, y_test):
     ax.set_ylabel("[Syn]")
     ax.xaxis.set_major_locator(YearLocator(base=1))
     ax.grid()
-    train_test_img = res_path+'training_testing_split.png'
+    train_test_img = res_path + 'training_testing_split.png'
     fig.savefig(train_test_img)
     im = Image.open(train_test_img)
     wandb.log({"Pre-Training Split": wandb.Image(im)})
 
 
 if __name__ == '__main__':
+
+    with open("config.yaml", "r") as f:
+        train_config = yaml.load(f)
+
     wandb.login()
-    res_path = "/home/mira/PycharmProjects/gp_plankton_model/results/"
-    PATH = "/home/mira/PycharmProjects/gp_plankton_model/datasets/syn_dataset.pkl"
-    df = load_data(pkl_path=PATH)
 
     wandb.init(project="syn_model")
     config = wandb.config
-    config.data_path = PATH
     config.train_size = 1 / 2
     config.num_mixtures = 4
     config.learning_rate = 0.1
     config.predictor = 'lindex'
     config.dependent = 'log_syn_interpolated'
+
+    df = load_data(pkl_path=config.data_path)
 
     X = torch.tensor(df[config.predictor].values, dtype=torch.float32)
     y = torch.tensor(df[config.dependent].values, dtype=torch.float32)
@@ -141,15 +140,16 @@ if __name__ == '__main__':
 
     likelihood = gpytorch.likelihoods.GaussianLikelihood(noise_constraint=gpytorch.constraints.GreaterThan(1e-3))
 
+    state_dict = torch.load(train_config["model_chkpoint_path"])
+
     model = spectral_model.SpectralMixtureGPModel(X_train, y_train, likelihood, config.num_mixtures)
-    config.model_type = "spectralGP"
 
     wandb.watch(model, log="all")
 
     train_model(likelihood, model, learning_rate=config.learning_rate)
 
     # saving model checkpoint
-    torch.save(model.state_dict(), res_path+config.model_type+"_training_iter_"+str(config.training_iter)+"_model.h5")
-    wandb.save(res_path+"training_iter_"+str(config.training_iter)+"_model.h5")
+    torch.save(model.state_dict(), train_config["data_path"])
+    wandb.save(res_path + "training_iter_" + str(config.training_iter) + "_model.h5")
 
     evaluate_model(X_test, likelihood, model)
