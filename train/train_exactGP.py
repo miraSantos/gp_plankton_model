@@ -14,7 +14,6 @@ from matplotlib import pyplot as plt
 
 import wandb  # library for tracking and visualization
 
-
 def load_data(pkl_path):
     return pd.read_pickle(pkl_path)
 
