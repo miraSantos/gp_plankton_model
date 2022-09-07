@@ -3,6 +3,10 @@ import pandas as pd
 import torch
 import gpytorch
 import os
+import sys
+
+sys.path.append(os.getcwd())
+
 from tqdm import tqdm
 import yaml
 import models.spectralGP_model
@@ -13,9 +17,6 @@ from PIL import Image
 import wandb  # library for tracking and visualization
 
 wandb.login()
-
-def load_data(pkl_path):
-    return pd.read_pickle(pkl_path)
 
 def train_test_split(X, y, train_size):
     """
@@ -127,7 +128,7 @@ if __name__ == '__main__':
     config.predictor = 'lindex'
     config.dependent = 'log_syn_interpolated'
 
-    df = load_data(pkl_path=train_config["data_path"])
+    df = pd.read_csv(train_config["data_path"],low_memory=False)
 
     X = torch.tensor(df[config.predictor].values, dtype=torch.float32)
     y = torch.tensor(df[config.dependent].values, dtype=torch.float32)
@@ -153,6 +154,6 @@ if __name__ == '__main__':
 
     # saving model checkpoint
     torch.save(model.state_dict(), train_config["data_path"])
-    wandb.save(res_path + "training_iter_" + str(config.training_iter) + "_model.h5")
+    wandb.save(train_config["res_path"] + "training_iter_" + str(config.training_iter) + "_model.h5")
 
     evaluate_model(X_test, likelihood, model)
