@@ -12,6 +12,8 @@ from matplotlib.dates import YearLocator
 from PIL import Image
 import wandb  # library for tracking and visualization
 
+sys.path.append(os.getcwd())
+
 wandb.login()
 
 def load_data(pkl_path):
