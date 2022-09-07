@@ -1,0 +1,187 @@
+2022-09-07 12:23:19,647 INFO    StreamThr :18069 [internal.py:wandb_internal():90] W&B internal server running at pid: 18069, started at: 2022-09-07 12:23:19.646187
+2022-09-07 12:23:19,649 DEBUG   HandlerThread:18069 [handler.py:handle_request():141] handle_request: status
+2022-09-07 12:23:19,651 DEBUG   SenderThread:18069 [sender.py:send_request():316] send_request: status
+2022-09-07 12:23:19,652 INFO    WriterThread:18069 [datastore.py:open_for_write():75] open: /home/mira/PycharmProjects/gp_plankton_model/wandb/run-20220907_122319-3rxfw7hq/run-3rxfw7hq.wandb
+2022-09-07 12:23:19,652 DEBUG   SenderThread:18069 [sender.py:send():302] send: header
+2022-09-07 12:23:19,652 DEBUG   SenderThread:18069 [sender.py:send():302] send: run
+2022-09-07 12:23:19,903 DEBUG   HandlerThread:18069 [handler.py:handle_request():141] handle_request: check_version
+2022-09-07 12:23:19,914 INFO    SenderThread:18069 [dir_watcher.py:__init__():216] watching files in: /home/mira/PycharmProjects/gp_plankton_model/wandb/run-20220907_122319-3rxfw7hq/files
+2022-09-07 12:23:19,915 INFO    SenderThread:18069 [sender.py:_start_run_threads():913] run started: 3rxfw7hq with start time 1662567799.639991
+2022-09-07 12:23:19,915 DEBUG   SenderThread:18069 [sender.py:send():302] send: summary
+2022-09-07 12:23:19,916 INFO    SenderThread:18069 [sender.py:_save_file():1156] saving file wandb-summary.json with policy end
+2022-09-07 12:23:19,916 DEBUG   SenderThread:18069 [sender.py:send_request():316] send_request: check_version
+2022-09-07 12:23:20,009 DEBUG   HandlerThread:18069 [handler.py:handle_request():141] handle_request: run_start
+2022-09-07 12:23:20,010 DEBUG   HandlerThread:18069 [meta.py:__init__():35] meta init
+2022-09-07 12:23:20,010 DEBUG   HandlerThread:18069 [meta.py:__init__():50] meta init done
+2022-09-07 12:23:20,010 DEBUG   HandlerThread:18069 [meta.py:probe():216] probe
+2022-09-07 12:23:20,011 DEBUG   HandlerThread:18069 [meta.py:_setup_git():206] setup git
+2022-09-07 12:23:20,016 DEBUG   HandlerThread:18069 [meta.py:_setup_git():213] setup git done
+2022-09-07 12:23:20,016 DEBUG   HandlerThread:18069 [meta.py:_save_pip():54] save pip
+2022-09-07 12:23:20,016 DEBUG   HandlerThread:18069 [meta.py:_save_pip():68] save pip done
+2022-09-07 12:23:20,016 DEBUG   HandlerThread:18069 [meta.py:_save_conda():75] save conda
+2022-09-07 12:23:20,916 INFO    Thread-12 :18069 [dir_watcher.py:_on_file_created():275] file/dir created: /home/mira/PycharmProjects/gp_plankton_model/wandb/run-20220907_122319-3rxfw7hq/files/conda-environment.yaml
+2022-09-07 12:23:20,916 INFO    Thread-12 :18069 [dir_watcher.py:_on_file_created():275] file/dir created: /home/mira/PycharmProjects/gp_plankton_model/wandb/run-20220907_122319-3rxfw7hq/files/wandb-summary.json
+2022-09-07 12:23:20,916 INFO    Thread-12 :18069 [dir_watcher.py:_on_file_created():275] file/dir created: /home/mira/PycharmProjects/gp_plankton_model/wandb/run-20220907_122319-3rxfw7hq/files/requirements.txt
+2022-09-07 12:23:23,321 DEBUG   HandlerThread:18069 [meta.py:_save_conda():85] save conda done
+2022-09-07 12:23:23,321 DEBUG   HandlerThread:18069 [meta.py:probe():254] probe done
+2022-09-07 12:23:23,359 DEBUG   SenderThread:18069 [sender.py:send():302] send: files
+2022-09-07 12:23:23,359 INFO    SenderThread:18069 [sender.py:_save_file():1156] saving file wandb-metadata.json with policy now
+2022-09-07 12:23:23,364 DEBUG   HandlerThread:18069 [handler.py:handle_request():141] handle_request: stop_status
+2022-09-07 12:23:23,364 DEBUG   SenderThread:18069 [sender.py:send_request():316] send_request: stop_status
+2022-09-07 12:23:23,458 DEBUG   SenderThread:18069 [sender.py:send():302] send: telemetry
+2022-09-07 12:23:23,459 DEBUG   SenderThread:18069 [sender.py:send():302] send: telemetry
+2022-09-07 12:23:23,459 DEBUG   SenderThread:18069 [sender.py:send():302] send: config
+2022-09-07 12:23:23,459 DEBUG   SenderThread:18069 [sender.py:send():302] send: config
+2022-09-07 12:23:23,459 DEBUG   SenderThread:18069 [sender.py:send():302] send: config
+2022-09-07 12:23:23,459 DEBUG   SenderThread:18069 [sender.py:send():302] send: config
+2022-09-07 12:23:23,459 DEBUG   SenderThread:18069 [sender.py:send():302] send: config
+2022-09-07 12:23:23,499 DEBUG   SenderThread:18069 [sender.py:send():302] send: config
+2022-09-07 12:23:23,500 DEBUG   SenderThread:18069 [sender.py:send():302] send: config
+2022-09-07 12:23:23,500 DEBUG   SenderThread:18069 [sender.py:send():302] send: config
+2022-09-07 12:23:23,500 DEBUG   SenderThread:18069 [sender.py:send():302] send: config
+2022-09-07 12:23:23,500 DEBUG   SenderThread:18069 [sender.py:send():302] send: config
+2022-09-07 12:23:23,760 INFO    Thread-16 :18069 [upload_job.py:push():138] Uploaded file /tmp/tmpbvr7op8ywandb/2416iyg0-wandb-metadata.json
+2022-09-07 12:23:23,915 INFO    Thread-12 :18069 [dir_watcher.py:_on_file_modified():292] file/dir modified: /home/mira/PycharmProjects/gp_plankton_model/wandb/run-20220907_122319-3rxfw7hq/files/conda-environment.yaml
+2022-09-07 12:23:23,916 INFO    Thread-12 :18069 [dir_watcher.py:_on_file_created():275] file/dir created: /home/mira/PycharmProjects/gp_plankton_model/wandb/run-20220907_122319-3rxfw7hq/files/output.log
+2022-09-07 12:23:23,916 INFO    Thread-12 :18069 [dir_watcher.py:_on_file_created():275] file/dir created: /home/mira/PycharmProjects/gp_plankton_model/wandb/run-20220907_122319-3rxfw7hq/files/wandb-metadata.json
+2022-09-07 12:23:24,363 DEBUG   SenderThread:18069 [sender.py:send():302] send: files
+2022-09-07 12:23:24,363 INFO    SenderThread:18069 [sender.py:_save_file():1156] saving file media/images/Pre-Training Split_0_1e3b3b95f44251ae1bc8.png with policy now
+2022-09-07 12:23:24,364 DEBUG   HandlerThread:18069 [handler.py:handle_request():141] handle_request: partial_history
+2022-09-07 12:23:24,367 DEBUG   SenderThread:18069 [sender.py:send():302] send: history
+2022-09-07 12:23:24,367 DEBUG   SenderThread:18069 [sender.py:send():302] send: summary
+2022-09-07 12:23:24,372 INFO    SenderThread:18069 [sender.py:_save_file():1156] saving file wandb-summary.json with policy end
+2022-09-07 12:23:24,384 DEBUG   HandlerThread:18069 [handler.py:handle_request():141] handle_request: poll_exit
+2022-09-07 12:23:24,384 DEBUG   SenderThread:18069 [sender.py:send():302] send: exit
+2022-09-07 12:23:24,385 INFO    SenderThread:18069 [sender.py:send_exit():438] handling exit code: 1
+2022-09-07 12:23:24,385 INFO    SenderThread:18069 [sender.py:send_exit():440] handling runtime: 4
+2022-09-07 12:23:24,385 INFO    SenderThread:18069 [sender.py:_save_file():1156] saving file wandb-summary.json with policy end
+2022-09-07 12:23:24,386 INFO    SenderThread:18069 [sender.py:send_exit():446] send defer
+2022-09-07 12:23:24,386 DEBUG   SenderThread:18069 [sender.py:send_request():316] send_request: poll_exit
+2022-09-07 12:23:24,386 DEBUG   HandlerThread:18069 [handler.py:handle_request():141] handle_request: defer
+2022-09-07 12:23:24,386 INFO    HandlerThread:18069 [handler.py:handle_request_defer():164] handle defer: 0
+2022-09-07 12:23:24,387 DEBUG   SenderThread:18069 [sender.py:send_request():316] send_request: defer
+2022-09-07 12:23:24,387 INFO    SenderThread:18069 [sender.py:send_request_defer():455] handle sender defer: 0
+2022-09-07 12:23:24,387 INFO    SenderThread:18069 [sender.py:transition_state():459] send defer: 1
+2022-09-07 12:23:24,387 DEBUG   HandlerThread:18069 [handler.py:handle_request():141] handle_request: defer
+2022-09-07 12:23:24,388 INFO    HandlerThread:18069 [handler.py:handle_request_defer():164] handle defer: 1
+2022-09-07 12:23:24,421 DEBUG   SenderThread:18069 [sender.py:send_request():316] send_request: defer
+2022-09-07 12:23:24,421 INFO    SenderThread:18069 [sender.py:send_request_defer():455] handle sender defer: 1
+2022-09-07 12:23:24,421 INFO    SenderThread:18069 [sender.py:transition_state():459] send defer: 2
+2022-09-07 12:23:24,421 DEBUG   SenderThread:18069 [sender.py:send():302] send: stats
+2022-09-07 12:23:24,421 DEBUG   HandlerThread:18069 [handler.py:handle_request():141] handle_request: defer
+2022-09-07 12:23:24,422 INFO    HandlerThread:18069 [handler.py:handle_request_defer():164] handle defer: 2
+2022-09-07 12:23:24,422 DEBUG   SenderThread:18069 [sender.py:send_request():316] send_request: defer
+2022-09-07 12:23:24,422 INFO    SenderThread:18069 [sender.py:send_request_defer():455] handle sender defer: 2
+2022-09-07 12:23:24,422 INFO    SenderThread:18069 [sender.py:transition_state():459] send defer: 3
+2022-09-07 12:23:24,422 DEBUG   HandlerThread:18069 [handler.py:handle_request():141] handle_request: defer
+2022-09-07 12:23:24,422 INFO    HandlerThread:18069 [handler.py:handle_request_defer():164] handle defer: 3
+2022-09-07 12:23:24,422 DEBUG   SenderThread:18069 [sender.py:send_request():316] send_request: defer
+2022-09-07 12:23:24,422 INFO    SenderThread:18069 [sender.py:send_request_defer():455] handle sender defer: 3
+2022-09-07 12:23:24,422 INFO    SenderThread:18069 [sender.py:transition_state():459] send defer: 4
+2022-09-07 12:23:24,422 DEBUG   HandlerThread:18069 [handler.py:handle_request():141] handle_request: defer
+2022-09-07 12:23:24,423 INFO    HandlerThread:18069 [handler.py:handle_request_defer():164] handle defer: 4
+2022-09-07 12:23:24,423 DEBUG   SenderThread:18069 [sender.py:send():302] send: summary
+2022-09-07 12:23:24,423 INFO    SenderThread:18069 [sender.py:_save_file():1156] saving file wandb-summary.json with policy end
+2022-09-07 12:23:24,423 DEBUG   SenderThread:18069 [sender.py:send_request():316] send_request: defer
+2022-09-07 12:23:24,423 INFO    SenderThread:18069 [sender.py:send_request_defer():455] handle sender defer: 4
+2022-09-07 12:23:24,423 INFO    SenderThread:18069 [sender.py:transition_state():459] send defer: 5
+2022-09-07 12:23:24,423 DEBUG   HandlerThread:18069 [handler.py:handle_request():141] handle_request: defer
+2022-09-07 12:23:24,423 INFO    HandlerThread:18069 [handler.py:handle_request_defer():164] handle defer: 5
+2022-09-07 12:23:24,424 DEBUG   SenderThread:18069 [sender.py:send_request():316] send_request: defer
+2022-09-07 12:23:24,424 INFO    SenderThread:18069 [sender.py:send_request_defer():455] handle sender defer: 5
+2022-09-07 12:23:24,492 DEBUG   HandlerThread:18069 [handler.py:handle_request():141] handle_request: poll_exit
+2022-09-07 12:23:24,533 INFO    SenderThread:18069 [sender.py:transition_state():459] send defer: 6
+2022-09-07 12:23:24,533 DEBUG   SenderThread:18069 [sender.py:send_request():316] send_request: poll_exit
+2022-09-07 12:23:24,534 DEBUG   HandlerThread:18069 [handler.py:handle_request():141] handle_request: defer
+2022-09-07 12:23:24,534 INFO    HandlerThread:18069 [handler.py:handle_request_defer():164] handle defer: 6
+2022-09-07 12:23:24,534 DEBUG   SenderThread:18069 [sender.py:send_request():316] send_request: defer
+2022-09-07 12:23:24,534 INFO    SenderThread:18069 [sender.py:send_request_defer():455] handle sender defer: 6
+2022-09-07 12:23:24,635 DEBUG   HandlerThread:18069 [handler.py:handle_request():141] handle_request: poll_exit
+2022-09-07 12:23:24,784 INFO    Thread-17 :18069 [upload_job.py:push():138] Uploaded file /tmp/tmpbvr7op8ywandb/33iticjp-media/images/Pre-Training Split_0_1e3b3b95f44251ae1bc8.png
+2022-09-07 12:23:24,917 INFO    Thread-12 :18069 [dir_watcher.py:_on_file_modified():292] file/dir modified: /home/mira/PycharmProjects/gp_plankton_model/wandb/run-20220907_122319-3rxfw7hq/files/wandb-summary.json
+2022-09-07 12:23:24,917 INFO    Thread-12 :18069 [dir_watcher.py:_on_file_modified():292] file/dir modified: /home/mira/PycharmProjects/gp_plankton_model/wandb/run-20220907_122319-3rxfw7hq/files/config.yaml
+2022-09-07 12:23:24,918 INFO    Thread-12 :18069 [dir_watcher.py:_on_file_created():275] file/dir created: /home/mira/PycharmProjects/gp_plankton_model/wandb/run-20220907_122319-3rxfw7hq/files/media/images/Pre-Training Split_0_1e3b3b95f44251ae1bc8.png
+2022-09-07 12:23:24,918 INFO    Thread-12 :18069 [dir_watcher.py:_on_file_created():275] file/dir created: /home/mira/PycharmProjects/gp_plankton_model/wandb/run-20220907_122319-3rxfw7hq/files/media/images
+2022-09-07 12:23:24,919 INFO    Thread-12 :18069 [dir_watcher.py:_on_file_created():275] file/dir created: /home/mira/PycharmProjects/gp_plankton_model/wandb/run-20220907_122319-3rxfw7hq/files/media
+2022-09-07 12:23:25,501 INFO    SenderThread:18069 [sender.py:transition_state():459] send defer: 7
+2022-09-07 12:23:25,502 DEBUG   SenderThread:18069 [sender.py:send_request():316] send_request: poll_exit
+2022-09-07 12:23:25,503 DEBUG   HandlerThread:18069 [handler.py:handle_request():141] handle_request: defer
+2022-09-07 12:23:25,504 INFO    HandlerThread:18069 [handler.py:handle_request_defer():164] handle defer: 7
+2022-09-07 12:23:25,505 DEBUG   SenderThread:18069 [sender.py:send_request():316] send_request: defer
+2022-09-07 12:23:25,506 INFO    SenderThread:18069 [sender.py:send_request_defer():455] handle sender defer: 7
+2022-09-07 12:23:25,506 INFO    SenderThread:18069 [dir_watcher.py:finish():362] shutting down directory watcher
+2022-09-07 12:23:25,606 DEBUG   HandlerThread:18069 [handler.py:handle_request():141] handle_request: poll_exit
+2022-09-07 12:23:25,644 INFO    Thread-18 :18069 [upload_job.py:push():138] Uploaded file /tmp/tmpbvr7op8ywandb/47tx1wgf-media/images/Pre-Training Split_0_1e3b3b95f44251ae1bc8.png
+2022-09-07 12:23:25,917 INFO    Thread-12 :18069 [dir_watcher.py:_on_file_modified():292] file/dir modified: /home/mira/PycharmProjects/gp_plankton_model/wandb/run-20220907_122319-3rxfw7hq/files/output.log
+2022-09-07 12:23:25,919 INFO    SenderThread:18069 [dir_watcher.py:finish():392] scan: /home/mira/PycharmProjects/gp_plankton_model/wandb/run-20220907_122319-3rxfw7hq/files
+2022-09-07 12:23:25,920 INFO    SenderThread:18069 [dir_watcher.py:finish():406] scan save: /home/mira/PycharmProjects/gp_plankton_model/wandb/run-20220907_122319-3rxfw7hq/files/output.log output.log
+2022-09-07 12:23:25,921 INFO    SenderThread:18069 [dir_watcher.py:finish():406] scan save: /home/mira/PycharmProjects/gp_plankton_model/wandb/run-20220907_122319-3rxfw7hq/files/conda-environment.yaml conda-environment.yaml
+2022-09-07 12:23:25,922 INFO    SenderThread:18069 [dir_watcher.py:finish():406] scan save: /home/mira/PycharmProjects/gp_plankton_model/wandb/run-20220907_122319-3rxfw7hq/files/config.yaml config.yaml
+2022-09-07 12:23:25,927 INFO    SenderThread:18069 [dir_watcher.py:finish():406] scan save: /home/mira/PycharmProjects/gp_plankton_model/wandb/run-20220907_122319-3rxfw7hq/files/wandb-metadata.json wandb-metadata.json
+2022-09-07 12:23:25,928 INFO    SenderThread:18069 [dir_watcher.py:finish():406] scan save: /home/mira/PycharmProjects/gp_plankton_model/wandb/run-20220907_122319-3rxfw7hq/files/requirements.txt requirements.txt
+2022-09-07 12:23:25,937 INFO    SenderThread:18069 [dir_watcher.py:finish():406] scan save: /home/mira/PycharmProjects/gp_plankton_model/wandb/run-20220907_122319-3rxfw7hq/files/wandb-summary.json wandb-summary.json
+2022-09-07 12:23:25,958 INFO    SenderThread:18069 [dir_watcher.py:finish():406] scan save: /home/mira/PycharmProjects/gp_plankton_model/wandb/run-20220907_122319-3rxfw7hq/files/media/images/Pre-Training Split_0_1e3b3b95f44251ae1bc8.png media/images/Pre-Training Split_0_1e3b3b95f44251ae1bc8.png
+2022-09-07 12:23:25,958 INFO    SenderThread:18069 [sender.py:transition_state():459] send defer: 8
+2022-09-07 12:23:25,959 DEBUG   SenderThread:18069 [sender.py:send_request():316] send_request: poll_exit
+2022-09-07 12:23:25,960 DEBUG   HandlerThread:18069 [handler.py:handle_request():141] handle_request: defer
+2022-09-07 12:23:25,960 INFO    HandlerThread:18069 [handler.py:handle_request_defer():164] handle defer: 8
+2022-09-07 12:23:25,960 DEBUG   SenderThread:18069 [sender.py:send_request():316] send_request: defer
+2022-09-07 12:23:25,960 INFO    SenderThread:18069 [sender.py:send_request_defer():455] handle sender defer: 8
+2022-09-07 12:23:25,960 INFO    SenderThread:18069 [file_pusher.py:finish():171] shutting down file pusher
+2022-09-07 12:23:26,061 DEBUG   HandlerThread:18069 [handler.py:handle_request():141] handle_request: poll_exit
+2022-09-07 12:23:26,061 DEBUG   SenderThread:18069 [sender.py:send_request():316] send_request: poll_exit
+2022-09-07 12:23:26,163 DEBUG   HandlerThread:18069 [handler.py:handle_request():141] handle_request: poll_exit
+2022-09-07 12:23:26,164 DEBUG   SenderThread:18069 [sender.py:send_request():316] send_request: poll_exit
+2022-09-07 12:23:26,283 DEBUG   HandlerThread:18069 [handler.py:handle_request():141] handle_request: poll_exit
+2022-09-07 12:23:26,291 DEBUG   SenderThread:18069 [sender.py:send_request():316] send_request: poll_exit
+2022-09-07 12:23:26,406 DEBUG   HandlerThread:18069 [handler.py:handle_request():141] handle_request: poll_exit
+2022-09-07 12:23:26,407 DEBUG   SenderThread:18069 [sender.py:send_request():316] send_request: poll_exit
+2022-09-07 12:23:26,510 DEBUG   HandlerThread:18069 [handler.py:handle_request():141] handle_request: poll_exit
+2022-09-07 12:23:26,510 DEBUG   SenderThread:18069 [sender.py:send_request():316] send_request: poll_exit
+2022-09-07 12:23:26,612 DEBUG   HandlerThread:18069 [handler.py:handle_request():141] handle_request: poll_exit
+2022-09-07 12:23:26,612 DEBUG   SenderThread:18069 [sender.py:send_request():316] send_request: poll_exit
+2022-09-07 12:23:26,671 INFO    Thread-21 :18069 [upload_job.py:push():138] Uploaded file /home/mira/PycharmProjects/gp_plankton_model/wandb/run-20220907_122319-3rxfw7hq/files/config.yaml
+2022-09-07 12:23:26,674 INFO    Thread-20 :18069 [upload_job.py:push():138] Uploaded file /home/mira/PycharmProjects/gp_plankton_model/wandb/run-20220907_122319-3rxfw7hq/files/conda-environment.yaml
+2022-09-07 12:23:26,714 DEBUG   HandlerThread:18069 [handler.py:handle_request():141] handle_request: poll_exit
+2022-09-07 12:23:26,715 DEBUG   SenderThread:18069 [sender.py:send_request():316] send_request: poll_exit
+2022-09-07 12:23:26,729 INFO    Thread-22 :18069 [upload_job.py:push():138] Uploaded file /home/mira/PycharmProjects/gp_plankton_model/wandb/run-20220907_122319-3rxfw7hq/files/requirements.txt
+2022-09-07 12:23:26,749 INFO    Thread-19 :18069 [upload_job.py:push():138] Uploaded file /home/mira/PycharmProjects/gp_plankton_model/wandb/run-20220907_122319-3rxfw7hq/files/output.log
+2022-09-07 12:23:26,753 INFO    Thread-23 :18069 [upload_job.py:push():138] Uploaded file /home/mira/PycharmProjects/gp_plankton_model/wandb/run-20220907_122319-3rxfw7hq/files/wandb-summary.json
+2022-09-07 12:23:26,817 DEBUG   HandlerThread:18069 [handler.py:handle_request():141] handle_request: poll_exit
+2022-09-07 12:23:26,818 DEBUG   SenderThread:18069 [sender.py:send_request():316] send_request: poll_exit
+2022-09-07 12:23:26,920 DEBUG   HandlerThread:18069 [handler.py:handle_request():141] handle_request: poll_exit
+2022-09-07 12:23:26,921 DEBUG   SenderThread:18069 [sender.py:send_request():316] send_request: poll_exit
+2022-09-07 12:23:26,954 INFO    Thread-11 (_thread_body):18069 [sender.py:transition_state():459] send defer: 9
+2022-09-07 12:23:26,954 DEBUG   HandlerThread:18069 [handler.py:handle_request():141] handle_request: defer
+2022-09-07 12:23:26,954 INFO    HandlerThread:18069 [handler.py:handle_request_defer():164] handle defer: 9
+2022-09-07 12:23:26,955 DEBUG   SenderThread:18069 [sender.py:send_request():316] send_request: defer
+2022-09-07 12:23:26,955 INFO    SenderThread:18069 [sender.py:send_request_defer():455] handle sender defer: 9
+2022-09-07 12:23:27,023 DEBUG   HandlerThread:18069 [handler.py:handle_request():141] handle_request: poll_exit
+2022-09-07 12:23:27,147 INFO    SenderThread:18069 [sender.py:transition_state():459] send defer: 10
+2022-09-07 12:23:27,147 DEBUG   SenderThread:18069 [sender.py:send_request():316] send_request: poll_exit
+2022-09-07 12:23:27,148 DEBUG   HandlerThread:18069 [handler.py:handle_request():141] handle_request: defer
+2022-09-07 12:23:27,148 INFO    HandlerThread:18069 [handler.py:handle_request_defer():164] handle defer: 10
+2022-09-07 12:23:27,149 DEBUG   SenderThread:18069 [sender.py:send_request():316] send_request: defer
+2022-09-07 12:23:27,149 INFO    SenderThread:18069 [sender.py:send_request_defer():455] handle sender defer: 10
+2022-09-07 12:23:27,149 INFO    SenderThread:18069 [sender.py:transition_state():459] send defer: 11
+2022-09-07 12:23:27,150 DEBUG   HandlerThread:18069 [handler.py:handle_request():141] handle_request: defer
+2022-09-07 12:23:27,150 INFO    HandlerThread:18069 [handler.py:handle_request_defer():164] handle defer: 11
+2022-09-07 12:23:27,151 DEBUG   SenderThread:18069 [sender.py:send():302] send: final
+2022-09-07 12:23:27,151 DEBUG   SenderThread:18069 [sender.py:send():302] send: footer
+2022-09-07 12:23:27,151 DEBUG   SenderThread:18069 [sender.py:send_request():316] send_request: defer
+2022-09-07 12:23:27,151 INFO    SenderThread:18069 [sender.py:send_request_defer():455] handle sender defer: 11
+2022-09-07 12:23:27,253 DEBUG   HandlerThread:18069 [handler.py:handle_request():141] handle_request: poll_exit
+2022-09-07 12:23:27,254 DEBUG   SenderThread:18069 [sender.py:send_request():316] send_request: poll_exit
+2022-09-07 12:23:27,254 INFO    SenderThread:18069 [file_pusher.py:join():176] waiting for file pusher
+2022-09-07 12:23:27,796 DEBUG   HandlerThread:18069 [handler.py:handle_request():141] handle_request: sampled_history
+2022-09-07 12:23:27,797 DEBUG   HandlerThread:18069 [handler.py:handle_request():141] handle_request: get_summary
+2022-09-07 12:23:27,798 INFO    MainThread:18069 [wandb_run.py:_footer_history_summary_info():3305] rendering history
+2022-09-07 12:23:27,798 INFO    MainThread:18069 [wandb_run.py:_footer_history_summary_info():3337] rendering summary
+2022-09-07 12:23:27,799 INFO    MainThread:18069 [wandb_run.py:_footer_sync_info():3261] logging synced files
+2022-09-07 12:23:27,800 DEBUG   HandlerThread:18069 [handler.py:handle_request():141] handle_request: shutdown
+2022-09-07 12:23:27,800 INFO    HandlerThread:18069 [handler.py:finish():810] shutting down handler
+2022-09-07 12:23:28,152 INFO    WriterThread:18069 [datastore.py:close():279] close: /home/mira/PycharmProjects/gp_plankton_model/wandb/run-20220907_122319-3rxfw7hq/run-3rxfw7hq.wandb
+2022-09-07 12:23:28,695 INFO    SenderThread:18069 [sender.py:finish():1312] shutting down sender
+2022-09-07 12:23:28,695 INFO    SenderThread:18069 [file_pusher.py:finish():171] shutting down file pusher
+2022-09-07 12:23:28,695 INFO    SenderThread:18069 [file_pusher.py:join():176] waiting for file pusher
+2022-09-07 12:23:28,802 INFO    MainThread:18069 [internal.py:handle_exit():80] Internal process exited

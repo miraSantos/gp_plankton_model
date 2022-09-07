@@ -4,6 +4,7 @@ import torch
 import gpytorch
 import os
 import sys
+import numpy as np
 
 sys.path.append(os.getcwd())
 
@@ -17,6 +18,7 @@ from PIL import Image
 import wandb  # library for tracking and visualization
 
 wandb.login()
+
 
 def train_test_split(X, y, train_size):
     """
@@ -114,7 +116,6 @@ def plot_train_test_data(x_train, y_train, x_test, y_test):
 
 
 if __name__ == '__main__':
-
     with open("train/train_config.yaml", "r") as f:
         train_config = yaml.load(f, Loader=yaml.FullLoader)
 
@@ -122,15 +123,15 @@ if __name__ == '__main__':
 
     wandb.init(project="syn_model")
     config = wandb.config
-    config.train_size = 1 / 2
-    config.num_mixtures = 4
-    config.learning_rate = 0.1
-    config.predictor = 'lindex'
-    config.dependent = 'log_syn_interpolated'
+    config.train_size = 1 / 3
+    config.num_mixtures = 6
+    config.learning_rate = 0.01
+    config.predictor = 'daily_index'
+    config.dependent = train_config["dependent"]
 
-    df = pd.read_csv(train_config["data_path"],low_memory=False)
+    df = pd.read_csv(train_config["data_path"])
 
-    X = torch.tensor(df[config.predictor].values, dtype=torch.float32)
+    X = torch.tensor(df.index, dtype=torch.float32)
     y = torch.tensor(df[config.dependent].values, dtype=torch.float32)
 
     X_train, y_train, X_test, y_test = define_training_data(X, y, train_size=config.train_size, normalize=True)
@@ -139,10 +140,12 @@ if __name__ == '__main__':
     config.y_train_shape = y_train.shape
     config.X_test_shape = X_test.shape
     config.y_test_shape = y_test.shape
+    config.sp_mixture_better_lower_bound = 1e-3
 
     plot_train_test_data(X_train, y_train, X_test, y_test)
 
-    likelihood = gpytorch.likelihoods.GaussianLikelihood(noise_constraint=gpytorch.constraints.GreaterThan(1e-3))
+    likelihood = gpytorch.likelihoods.GaussianLikelihood()
+        # noise_constraint=gpytorch.constraints.GreaterThan(config.sp_mixture_better_lower_bound))
 
     # state_dict = torch.load(train_config["model_chkpoint_path"])
 
@@ -153,7 +156,5 @@ if __name__ == '__main__':
     train_model(likelihood, model, learning_rate=config.learning_rate)
 
     # saving model checkpoint
-    torch.save(model.state_dict(), train_config["data_path"])
+    torch.save(model.state_dict(), train_config["model_chkpoint_path"])
     wandb.save(train_config["res_path"] + "training_iter_" + str(config.training_iter) + "_model.h5")
-
-    evaluate_model(X_test, likelihood, model)

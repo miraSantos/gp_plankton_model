@@ -61,7 +61,10 @@ if __name__ == '__main__':
     dfd = create_daily_df(df)
     dfd = interpolate(dfd, "Beam_temperature_corrected")
     dfd = interpolate(dfd, "log_syn")
+    dfd.reset_index(inplace=True)
+    dfd = dfd.replace(r'^\s*$', np.nan, regex=True)
     dfd.to_pickle(save_path+".pkl")
+    print(dfd.dtypes)
     dfd.to_csv(save_path+".csv")
 
     print("saved to datasets")

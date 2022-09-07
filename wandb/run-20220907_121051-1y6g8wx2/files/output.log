@@ -1,0 +1,19 @@
+/home/mira/PycharmProjects/gp_plankton_model/train/train.py:132: DtypeWarning: Columns (64,65,130,131,188) have mixed types. Specify dtype option on import or set low_memory=False.
+  df = pd.read_csv(train_config["data_path"])
+Traceback (most recent call last):
+  File "/home/mira/anaconda3/envs/pyro/lib/python3.10/site-packages/pandas/core/indexes/base.py", line 3621, in get_loc
+    return self._engine.get_loc(casted_key)
+  File "pandas/_libs/index.pyx", line 136, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/index.pyx", line 142, in pandas._libs.index.IndexEngine.get_loc
+TypeError: '(slice(None, None, None), 1)' is an invalid key
+During handling of the above exception, another exception occurred:
+Traceback (most recent call last):
+  File "/home/mira/PycharmProjects/gp_plankton_model/train/train.py", line 134, in <module>
+    X = torch.tensor(np.linspace(0,len(df[:,1]),len(df[:,1])), dtype=torch.float32)
+  File "/home/mira/anaconda3/envs/pyro/lib/python3.10/site-packages/pandas/core/frame.py", line 3505, in __getitem__
+    indexer = self.columns.get_loc(key)
+  File "/home/mira/anaconda3/envs/pyro/lib/python3.10/site-packages/pandas/core/indexes/base.py", line 3628, in get_loc
+    self._check_indexing_error(key)
+  File "/home/mira/anaconda3/envs/pyro/lib/python3.10/site-packages/pandas/core/indexes/base.py", line 5637, in _check_indexing_error
+    raise InvalidIndexError(key)
+pandas.errors.InvalidIndexError: (slice(None, None, None), 1)

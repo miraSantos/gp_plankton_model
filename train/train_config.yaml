@@ -1,4 +1,6 @@
 model: "spectralGP_model"
-data_path: "datasets/dfmerged_daily_phyto_2022-09-06.csv"
+data_path: "datasets/df_merged_daily_phyto_2022-09-07_interpolated.csv"
 res_path: "results/"
 model_chkpoint_path: "models/model_chkpoints"
+#dependent: "synconc"
+dependent: "log_syn_interpolated"
