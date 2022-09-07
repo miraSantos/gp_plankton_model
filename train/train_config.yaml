@@ -1,5 +1,5 @@
 
 model: "spectralGP_model"
-data_path: "/home/mira/PycharmProjects/gp_plankton_model/datasets/syn_dataset.pkl"
-res_path: "/home/mira/PycharmProjects/gp_plankton_model/results/"
-model_chkpoint_path: "home/mira/PycharmProjects/gp_plankton_model/model/model_chkpoints"
+data_path: "../datasets/df_merged_daily_phyto_2022-09-06_interpolated.pkl"
+res_path: "../results/"
+model_chkpoint_path: "../model/model_chkpoints"
