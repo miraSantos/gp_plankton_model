@@ -12,8 +12,6 @@ from matplotlib.dates import YearLocator
 from PIL import Image
 import wandb  # library for tracking and visualization
 
-sys.path.append(os.getcwd())
-
 wandb.login()
 
 def load_data(pkl_path):
@@ -116,7 +114,7 @@ def plot_train_test_data(x_train, y_train, x_test, y_test):
 
 if __name__ == '__main__':
 
-    with open("train_config.yaml", "r") as f:
+    with open("train/train_config.yaml", "r") as f:
         train_config = yaml.load(f, Loader=yaml.FullLoader)
 
     wandb.login()
