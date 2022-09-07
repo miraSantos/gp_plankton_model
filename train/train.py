@@ -5,8 +5,11 @@ import gpytorch
 import os
 from tqdm import tqdm
 import yaml
-from models import spectralGP_model, exactGP_model
+from models import spectralGP_model
+import matplotlib.pyplot as plt
 
+from matplotlib.dates import YearLocator
+from PIL import Image
 import wandb  # library for tracking and visualization
 
 wandb.login()
@@ -103,7 +106,7 @@ def plot_train_test_data(x_train, y_train, x_test, y_test):
     ax.set_ylabel("[Syn]")
     ax.xaxis.set_major_locator(YearLocator(base=1))
     ax.grid()
-    train_test_img = res_path + 'training_testing_split.png'
+    train_test_img = train_config["res_path"] + 'training_testing_split.png'
     fig.savefig(train_test_img)
     im = Image.open(train_test_img)
     wandb.log({"Pre-Training Split": wandb.Image(im)})
@@ -111,8 +114,8 @@ def plot_train_test_data(x_train, y_train, x_test, y_test):
 
 if __name__ == '__main__':
 
-    with open("config.yaml", "r") as f:
-        train_config = yaml.load(f)
+    with open("train_config.yaml", "r") as f:
+        train_config = yaml.load(f, Loader=yaml.FullLoader)
 
     wandb.login()
 
@@ -124,7 +127,7 @@ if __name__ == '__main__':
     config.predictor = 'lindex'
     config.dependent = 'log_syn_interpolated'
 
-    df = load_data(pkl_path=config.data_path)
+    df = load_data(pkl_path=train_config["data_path"])
 
     X = torch.tensor(df[config.predictor].values, dtype=torch.float32)
     y = torch.tensor(df[config.dependent].values, dtype=torch.float32)
@@ -140,9 +143,9 @@ if __name__ == '__main__':
 
     likelihood = gpytorch.likelihoods.GaussianLikelihood(noise_constraint=gpytorch.constraints.GreaterThan(1e-3))
 
-    state_dict = torch.load(train_config["model_chkpoint_path"])
+    # state_dict = torch.load(train_config["model_chkpoint_path"])
 
-    model = spectral_model.SpectralMixtureGPModel(X_train, y_train, likelihood, config.num_mixtures)
+    model = spectralGP_model.SpectralMixtureGPModel(X_train, y_train, likelihood, config.num_mixtures)
 
     wandb.watch(model, log="all")
 
