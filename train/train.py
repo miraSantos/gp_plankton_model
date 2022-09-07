@@ -9,7 +9,7 @@ sys.path.append(os.getcwd())
 
 from tqdm import tqdm
 import yaml
-from models import spectralGP_model
+import models.spectralGP_model
 import matplotlib.pyplot as plt
 from matplotlib.dates import YearLocator
 from PIL import Image
