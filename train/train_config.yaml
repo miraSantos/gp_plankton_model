@@ -1,4 +1,4 @@
 model: "spectralGP_model"
-data_path: "../datasets/df_merged_daily_phyto_2022-09-06_interpolated.pkl"
-res_path: "../results/"
-model_chkpoint_path: "../models/model_chkpoints"
+data_path: "datasets/df_merged_daily_phyto_2022-09-06_interpolated.pkl"
+res_path: "results/"
+model_chkpoint_path: "models/model_chkpoints"

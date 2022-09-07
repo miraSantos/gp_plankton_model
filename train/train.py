@@ -5,8 +5,6 @@ import gpytorch
 import os
 import sys
 
-sys.path.append(os.getcwd())
-
 from tqdm import tqdm
 import yaml
 import models.spectralGP_model
@@ -119,7 +117,7 @@ def plot_train_test_data(x_train, y_train, x_test, y_test):
 
 if __name__ == '__main__':
 
-    with open("train_config.yaml", "r") as f:
+    with open("train/train_config.yaml", "r") as f:
         train_config = yaml.load(f, Loader=yaml.FullLoader)
 
     wandb.login()
@@ -150,7 +148,7 @@ if __name__ == '__main__':
 
     # state_dict = torch.load(train_config["model_chkpoint_path"])
 
-    model = spectralGP_model.SpectralMixtureGPModel(X_train, y_train, likelihood, config.num_mixtures)
+    model = models.spectralGP_model.SpectralMixtureGPModel(X_train, y_train, likelihood, config.num_mixtures)
 
     wandb.watch(model, log="all")
 
