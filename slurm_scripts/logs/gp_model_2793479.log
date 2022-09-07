@@ -1,0 +1,6 @@
+/vortexfs1/scratch/msantos/gp_plankton_model/slurm_scripts
+pn027
+Wed Sep  7 00:11:14 EDT 2022
+running test job
+/vortexfs1/home/msantos/.conda/envs/gpytorch/bin/python: Relative module names not supported
+Wed Sep  7 00:11:20 EDT 2022

@@ -8,11 +8,9 @@
 #SBATCH --output=logs/gp_model_%j.log   # Standard output and error log
 pwd; hostname; date
 
-module load anaconda3/2021.11
+eval "$(conda shell.bash hook)"
 
-source activate gp
-
-module load python3/3.10.2
+conda activate gpytorch
 
 echo "running test job"
 
