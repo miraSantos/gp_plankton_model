@@ -1,9 +1,0 @@
-/vortexfs1/scratch/msantos/gp_plankton_model/slurm_scripts
-pn027
-Wed Sep  7 00:45:40 EDT 2022
-running test job
-  File "/vortexfs1/scratch/msantos/gp_plankton_model/slurm_scripts/../train/train.py", line 8
-    from ../models import spectralGP_model
-           ^
-SyntaxError: invalid syntax
-Wed Sep  7 00:45:45 EDT 2022

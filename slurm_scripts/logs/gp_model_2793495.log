@@ -1,5 +1,0 @@
-/vortexfs1/scratch/msantos/gp_plankton_model/slurm_scripts
-pn027
-Wed Sep  7 00:56:51 EDT 2022
-/cm/local/apps/slurm/var/spool/job2793495/slurm_script: line 11: syntax error near unexpected token `os.getcwd'
-/cm/local/apps/slurm/var/spool/job2793495/slurm_script: line 11: `sys.path.append(os.getcwd()) '

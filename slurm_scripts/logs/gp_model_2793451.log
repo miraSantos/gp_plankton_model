@@ -1,9 +1,0 @@
-/vortexfs1/scratch/msantos/gp_plankton_model/slurm_scripts
-pn010
-Tue Sep  6 22:03:39 EDT 2022
-running test job
-Traceback (most recent call last):
-  File "/vortexfs1/scratch/msantos/gp_plankton_model/slurm_scripts/../train/train.py", line 6, in <module>
-    from tqdm import tqdm
-ModuleNotFoundError: No module named 'tqdm'
-Tue Sep  6 22:04:12 EDT 2022

@@ -1,9 +1,0 @@
-/vortexfs1/scratch/msantos/gp_plankton_model/slurm_scripts
-pn027
-Tue Sep  6 23:31:35 EDT 2022
-running test job
-Traceback (most recent call last):
-  File "/vortexfs1/scratch/msantos/gp_plankton_model/slurm_scripts/../train/train.py", line 8, in <module>
-    from models import spectralGP_model, exactGP_model
-ModuleNotFoundError: No module named 'models'
-Tue Sep  6 23:32:16 EDT 2022

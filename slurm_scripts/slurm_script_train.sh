@@ -14,6 +14,8 @@ conda activate gpytorch
 
 echo "running test job"
 
-python ../train/train.py
+cd /vortexfs1/scratch/msantos/gp_plankton_model/
+
+python /vortexfs1/scratch/msantos/gp_plankton_model/train/train.py
 
 date

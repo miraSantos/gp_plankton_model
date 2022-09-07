@@ -3,17 +3,19 @@ import pandas as pd
 import torch
 import gpytorch
 import os
+<<<<<<< HEAD
 import sys
 
+=======
+>>>>>>> 9e7ea87ff74f4fc6f8ad42da359fb4eecad8ebee
 from tqdm import tqdm
 import yaml
-import models.spectralGP_model
+from models import spectralGP_model
 import matplotlib.pyplot as plt
+
 from matplotlib.dates import YearLocator
 from PIL import Image
 import wandb  # library for tracking and visualization
-
-
 
 wandb.login()
 
