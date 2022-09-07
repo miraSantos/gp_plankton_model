@@ -9,6 +9,8 @@ from models import spectralGP_model, exactGP_model
 
 import wandb  # library for tracking and visualization
 
+wandb.login()
+
 def load_data(pkl_path):
     return pd.read_pickle(pkl_path)
 

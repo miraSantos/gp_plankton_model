@@ -5,11 +5,8 @@ import gpytorch
 import os
 from tqdm import tqdm
 from models import exactGP_model
-
 from matplotlib.dates import YearLocator
-
 from PIL import Image
-
 from matplotlib import pyplot as plt
 
 import wandb  # library for tracking and visualization
@@ -142,7 +139,7 @@ if __name__ == '__main__':
 
     likelihood = gpytorch.likelihoods.GaussianLikelihood(noise_constraint=gpytorch.constraints.GreaterThan(1e-3))
 
-    model = spectral_model.SpectralMixtureGPModel(X_train, y_train, likelihood, config.num_mixtures)
+    model = exactGP_model.SpectralMixtureGPModel(X_train, y_train, likelihood, config.num_mixtures)
     config.model_type = "spectralGP"
 
     wandb.watch(model, log="all")
