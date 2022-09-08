@@ -79,7 +79,7 @@ def train_model(likelihood, model, optimizer, learning_rate=0.1):
     # "Loss" for GPs - the marginal log likelihood
     mll = gpytorch.mlls.ExactMarginalLogLikelihood(likelihood, model)
 
-    pbar = tqdm(range(config.training_iter))
+    pbar = tqdm(range(config.training_iter),leave=None)
     for i in pbar:
         optimizer.zero_grad()
         output = model(X_train)
