@@ -5,6 +5,7 @@ import gpytorch
 import os
 import sys
 import numpy as np
+import matplotlib.dates as mdates     # v 3.3.2
 
 sys.path.append(os.getcwd())
 
@@ -18,7 +19,6 @@ from PIL import Image
 import wandb  # library for tracking and visualization
 
 wandb.login()
-
 
 def train_test_split(X, y, train_size):
     """
@@ -63,7 +63,7 @@ def define_training_data(X, y, train_size, normalize=True):
     return X_train, y_train, X_test, y_test
 
 
-def train_model(likelihood, model, learning_rate=0.1):
+def train_model(likelihood, model, optimizer, learning_rate=0.1):
     """
     :param likelihood:
     :param model:
@@ -75,7 +75,6 @@ def train_model(likelihood, model, learning_rate=0.1):
     smoke_test = ('CI' in os.environ)
     config.training_iter = 2000 if smoke_test else 100
     # Use the adam optimizer
-    optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate)
     # "Loss" for GPs - the marginal log likelihood
     mll = gpytorch.mlls.ExactMarginalLogLikelihood(likelihood, model)
 
@@ -98,18 +97,26 @@ def plot_train_test_data(x_train, y_train, x_test, y_test):
     #     title="Training and testing sets",
     #     xname="Number of Observations"
     # )})
+
+    df['date'] = pd.to_datetime(df['date'], format="%Y-%m-%d")
+
     width = 20
     height = 5
     fig, ax = plt.subplots(figsize=(width, height))
-    ax.scatter(df.date[len(X_train):], y_test, color="blue")
-    ax.scatter(df.date[:len(X_train)], y_train, color="red")
+    ax.scatter(df.date[:len(X_train)], y_train, color="blue", label="training data")
+    ax.scatter(df.date[len(X_train):], y_test, color="red", label="testing data")
     ax.axvline(x=df.date[len(X_train)], color="red", label="train_test_splot")
     ax.set_title("Training and Testing Split")
-    ax.set_xlabel("Time")
-    ax.set_ylabel("[Syn]")
-    ax.xaxis.set_major_locator(YearLocator(base=1))
+    ax.set_xlabel("Year")
+    ax.set_ylabel("[log(Syn)] (Normalized")
+    ax.xaxis.set_major_locator(mdates.YearLocator())
+    ax.xaxis.set_major_formatter(mdates.DateFormatter("%Y"))
+
     ax.grid()
-    train_test_img = train_config["res_path"] + 'training_testing_split.png'
+
+    #saving image
+    train_test_img = train_config["res_path"] + 'train_test_split_train_size_' + str(
+        train_config["train_size"]) + '.png'
     fig.savefig(train_test_img)
     im = Image.open(train_test_img)
     wandb.log({"Pre-Training Split": wandb.Image(im)})
@@ -123,9 +130,9 @@ if __name__ == '__main__':
 
     wandb.init(project="syn_model")
     config = wandb.config
-    config.train_size = 1 / 3
-    config.num_mixtures = 6
-    config.learning_rate = 0.01
+    config.train_size = train_config["train_size"]
+    config.num_mixtures = train_config["num_mixtures"]
+    config.learning_rate = train_config["learning_rate"]
     config.predictor = 'daily_index'
     config.dependent = train_config["dependent"]
 
@@ -136,6 +143,11 @@ if __name__ == '__main__':
 
     X_train, y_train, X_test, y_test = define_training_data(X, y, train_size=config.train_size, normalize=True)
 
+    torch.save(X_train, train_config["split_folder"]+"train_size"+str(train_config["train_size"])+"_X_train.pt")
+    torch.save(y_train, train_config["split_folder"]+"train_size"+str(train_config["train_size"])+"_y_train.pt")
+    torch.save(X_test, train_config["split_folder"]+"train_size"+str(train_config["train_size"])+"_X_test.pt")
+    torch.save(y_test, train_config["split_folder"]+"train_size"+str(train_config["train_size"])+"_y_test.pt")
+
     config.X_train_shape = X_train.shape
     config.y_train_shape = y_train.shape
     config.X_test_shape = X_test.shape
@@ -145,16 +157,16 @@ if __name__ == '__main__':
     plot_train_test_data(X_train, y_train, X_test, y_test)
 
     likelihood = gpytorch.likelihoods.GaussianLikelihood()
-        # noise_constraint=gpytorch.constraints.GreaterThan(config.sp_mixture_better_lower_bound))
-
-    # state_dict = torch.load(train_config["model_chkpoint_path"])
+    # noise_constraint=gpytorch.constraints.GreaterThan(config.sp_mixture_better_lower_bound))
 
     model = models.spectralGP_model.SpectralMixtureGPModel(X_train, y_train, likelihood, config.num_mixtures)
 
     wandb.watch(model, log="all")
 
-    train_model(likelihood, model, learning_rate=config.learning_rate)
+    optimizer = torch.optim.Adam(model.parameters(), lr=config.learning_rate)
+
+    train_model(likelihood, model, optimizer, learning_rate=config.learning_rate)
 
     # saving model checkpoint
-    torch.save(model.state_dict(), train_config["model_chkpoint_path"])
-    wandb.save(train_config["res_path"] + "training_iter_" + str(config.training_iter) + "_model.h5")
+    torch.save(model.state_dict(), train_config["model_checkpoint_folder"] + "/training_size_" +
+               str(train_config["train_size"]) + "_model_checkpoint.pt")
