@@ -12,12 +12,9 @@ eval "$(conda shell.bash hook)"
 
 conda activate gpytorch
 
-echo "training model_spectral"
+echo "running evaluation"
 
 cd /vortexfs1/scratch/msantos/gp_plankton_model/
-
-python /vortexfs1/scratch/msantos/gp_plankton_model/train/train.py
-echo "training finished"
 
 python /vortexfs1/scratch/msantos/gp_plankton_model/evaluation/evaluate.py
 echo "evaluation finished"
