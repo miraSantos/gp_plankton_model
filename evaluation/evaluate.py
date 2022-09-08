@@ -37,7 +37,7 @@ def plot_inference(X_test, y_test, X_train, y_train):
     ax.plot(df.date[len(X_train):], observed_pred.mean.detach().numpy(), 'b', label="prediction")
     ax.plot(df.date[len(X_train):], y_test, 'g', label="testing data")
     # Shade between the lower and upper confidence bounds
-    ax.fill_between(df.date[:len(X_test)], lower.detach().numpy(), upper.detach().numpy(), alpha=0.5)
+    ax.fill_between(df.date[len(X_train):], lower.detach().numpy(), upper.detach().numpy(), alpha=0.5)
     ax.xaxis.set_major_locator(mdates.YearLocator())
     ax.xaxis.set_major_formatter(mdates.DateFormatter("%Y"))
     ax.set_xlabel("Year")
