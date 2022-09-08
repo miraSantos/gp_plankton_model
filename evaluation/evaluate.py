@@ -1,6 +1,8 @@
 import os
 import sys
 
+sys.path.append(os.getcwd())
+
 import gpytorch
 import matplotlib.dates as mdates  # v 3.3.2
 import matplotlib.pyplot as plt
@@ -11,9 +13,6 @@ import yaml
 from PIL import Image
 
 import models.spectralGP_model
-
-sys.path.append(os.getcwd())
-
 
 def plot_inference(X_test, y_test, X_train, y_train):
     """
