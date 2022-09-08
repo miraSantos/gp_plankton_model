@@ -1,3 +1,4 @@
 train/wandb/*
 datasets/*
 slurm_scripts/logs/*
+wandb/*
