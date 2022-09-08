@@ -1,15 +1,18 @@
+import os
+import sys
+
 import gpytorch
+import matplotlib.dates as mdates  # v 3.3.2
 import matplotlib.pyplot as plt
 import pandas as pd
-import yaml
 import torch
 import wandb
-import math
-import models.spectralGP_model
-from matplotlib.dates import YearLocator
+import yaml
 from PIL import Image
-import matplotlib.dates as mdates     # v 3.3.2
 
+import models.spectralGP_model
+
+sys.path.append(os.getcwd())
 
 
 def plot_inference(X_test, y_test, X_train, y_train):
@@ -64,10 +67,10 @@ if __name__ == '__main__':
 
     likelihood = gpytorch.likelihoods.GaussianLikelihood()
 
-    X_train = torch.load(train_config["split_folder"] + "train_size" + str(train_config["train_size"]) + "_X_train.pt")
-    y_train = torch.load(train_config["split_folder"] + "train_size" + str(train_config["train_size"]) + "_y_train.pt")
-    X_test = torch.load(train_config["split_folder"] + "train_size" + str(train_config["train_size"]) + "_X_test.pt")
-    y_test = torch.load(train_config["split_folder"] + "train_size" + str(train_config["train_size"]) + "_y_test.pt")
+    X_train = torch.load(train_config["split_folder"] + "train_size_" + str(train_config["train_size"]) + "_X_train.pt")
+    y_train = torch.load(train_config["split_folder"] + "train_size_" + str(train_config["train_size"]) + "_y_train.pt")
+    X_test = torch.load(train_config["split_folder"] + "train_size_" + str(train_config["train_size"]) + "_X_test.pt")
+    y_test = torch.load(train_config["split_folder"] + "train_size_" + str(train_config["train_size"]) + "_y_test.pt")
 
     model = models.spectralGP_model.SpectralMixtureGPModel(X_train, y_train, likelihood, train_config["num_mixtures"])
     model.load_state_dict(torch.load(train_config["model_checkpoint_file"]))
