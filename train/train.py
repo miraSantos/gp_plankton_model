@@ -143,10 +143,10 @@ if __name__ == '__main__':
 
     X_train, y_train, X_test, y_test = define_training_data(X, y, train_size=config.train_size, normalize=True)
 
-    torch.save(X_train, train_config["split_folder"]+"train_size"+str(train_config["train_size"])+"_X_train.pt")
-    torch.save(y_train, train_config["split_folder"]+"train_size"+str(train_config["train_size"])+"_y_train.pt")
-    torch.save(X_test, train_config["split_folder"]+"train_size"+str(train_config["train_size"])+"_X_test.pt")
-    torch.save(y_test, train_config["split_folder"]+"train_size"+str(train_config["train_size"])+"_y_test.pt")
+    torch.save(X_train, train_config["split_folder"]+"train_size_"+str(train_config["train_size"])+"_X_train.pt")
+    torch.save(y_train, train_config["split_folder"]+"train_size_"+str(train_config["train_size"])+"_y_train.pt")
+    torch.save(X_test, train_config["split_folder"]+"train_size_"+str(train_config["train_size"])+"_X_test.pt")
+    torch.save(y_test, train_config["split_folder"]+"train_size_"+str(train_config["train_size"])+"_y_test.pt")
 
     config.X_train_shape = X_train.shape
     config.y_train_shape = y_train.shape
@@ -157,7 +157,6 @@ if __name__ == '__main__':
     plot_train_test_data(X_train, y_train, X_test, y_test)
 
     likelihood = gpytorch.likelihoods.GaussianLikelihood()
-    # noise_constraint=gpytorch.constraints.GreaterThan(config.sp_mixture_better_lower_bound))
 
     model = models.spectralGP_model.SpectralMixtureGPModel(X_train, y_train, likelihood, config.num_mixtures)
 
