@@ -34,7 +34,7 @@ def plot_inference(X_test, y_test, X_train, y_train):
     # Plot training preprocess as black stars
     ax.plot(df.date[:len(X_train)], y_train, 'k*', label="training data")
     # Plot predictive means as blue line
-    ax.plot(df.date[:len(X_test)], observed_pred.mean.detach().numpy(), 'b', label="prediction")
+    ax.plot(df.date[len(X_train):], observed_pred.mean.detach().numpy(), 'b', label="prediction")
     ax.plot(df.date[len(X_train):], y_test, 'g', label="testing data")
     # Shade between the lower and upper confidence bounds
     ax.fill_between(df.date[:len(X_test)], lower.detach().numpy(), upper.detach().numpy(), alpha=0.5)
