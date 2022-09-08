@@ -85,5 +85,4 @@ if __name__ == '__main__':
     observed_pred = likelihood(model(X_test))
     print(observed_pred)
     plot_inference(X_test, y_test, X_train, y_train)
-    print(observed_pred.shape)
 
