@@ -15,7 +15,7 @@ from PIL import Image
 import models.spectralGP_model
 import argparse
 
-def plot_inference(X_test, y_test, X_train, y_train):
+def plot_inference(df,X_test, y_test, X_train, y_train):
     """
     :param x_test:
     :param likelihood:
@@ -24,7 +24,6 @@ def plot_inference(X_test, y_test, X_train, y_train):
     """
     # Initialize plot
 
-    df = pd.read_csv(train_config["data_path"])
     df['date'] = pd.to_datetime(df['date'], format="%Y-%m-%d")
     width = 20
     height = 5
@@ -71,6 +70,8 @@ if __name__ == '__main__':
 
     likelihood = gpytorch.likelihoods.GaussianLikelihood()
 
+    df = pd.read_csv(train_config["data_path"])
+
     X = torch.load(train_config["split_folder"] + "X_dataset.pt")
     X_train = torch.load(train_config["split_folder"] + "train_size_" + str(config.train_size) + "_X_train.pt")
     y_train = torch.load(train_config["split_folder"] + "train_size_" + str(config.train_size) + "_y_train.pt")
@@ -84,5 +85,5 @@ if __name__ == '__main__':
 
     observed_pred = likelihood(model(X))
     print(observed_pred)
-    plot_inference(X_test, y_test, X_train, y_train)
+    plot_inference(df,X_test, y_test, X_train, y_train)
 
