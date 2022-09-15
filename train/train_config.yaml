@@ -8,6 +8,6 @@ dependent: "log_syn_interpolated"
 
 split_folder: "datasets/split/"
 
-num_mixtures: 5
+num_mixtures: 10
 learning_rate: 0.1
 training_iter: 2000

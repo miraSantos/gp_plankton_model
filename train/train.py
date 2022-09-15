@@ -148,6 +148,7 @@ if __name__ == '__main__':
 
     X_train, y_train, X_test, y_test = define_training_data(X, y, train_size=config.train_size, normalize=True)
 
+    torch.save(X, train_config["split_folder"] + "X_dataset.pt")
     torch.save(X_train, train_config["split_folder"] + "train_size_" + str(config.train_size) + "_X_train.pt")
     torch.save(y_train, train_config["split_folder"] + "train_size_" + str(config.train_size) + "_y_train.pt")
     torch.save(X_test, train_config["split_folder"] + "train_size_" + str(config.train_size) + "_X_test.pt")
@@ -169,7 +170,7 @@ if __name__ == '__main__':
 
     optimizer = torch.optim.Adam(model.parameters(), lr=config.learning_rate)
 
-    train_model(likelsihood, model, optimizer, learning_rate=config.learning_rate)
+    train_model(likelihood, model, optimizer, learning_rate=config.learning_rate)
 
     # saving model checkpoint
     torch.save(model.state_dict(), train_config["model_checkpoint_folder"] + "/training_size_" +
