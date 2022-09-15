@@ -9,5 +9,5 @@ dependent: "log_syn_interpolated"
 split_folder: "datasets/split/"
 
 num_mixtures: 10
-learning_rate: 0.05
+learning_rate: 0.3
 training_iter: 300

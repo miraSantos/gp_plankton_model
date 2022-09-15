@@ -1,4 +1,4 @@
-train/wandb/*
+tgit rain/wandb/*
 datasets/*
 slurm_scripts/logs/*
 wandb/*
