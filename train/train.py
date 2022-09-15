@@ -108,7 +108,7 @@ def plot_train_test_data(x_train, y_train, x_test, y_test):
     ax.scatter(df.date[:len(X_train)], y_train, color="blue", label="training data")
     ax.scatter(df.date[len(X_train):], y_test, color="red", label="testing data")
     ax.axvline(x=df.date[len(X_train)], color="red", label="train_test_splot")
-    ax.set_title("Train Test Split " + "Training Size " + str(args.train_size * 100) + "% of data")
+    ax.set_title("Train Test Split " + "Training Size " + str(config.train_size * 100) + "% of data")
     ax.set_xlabel("Year")
     ax.set_ylabel("[log(Syn)] (Normalized")
     ax.xaxis.set_major_locator(mdates.YearLocator())
@@ -118,7 +118,7 @@ def plot_train_test_data(x_train, y_train, x_test, y_test):
 
     # saving image
     train_test_img = train_config["res_path"] + 'train_test_split_train_size_' + str(
-        args.train_size) + '.png'
+        config.train_size) + '.png'
     fig.savefig(train_test_img)
     im = Image.open(train_test_img)
     wandb.log({"Pre-Training Split": wandb.Image(im)})
@@ -148,10 +148,10 @@ if __name__ == '__main__':
 
     X_train, y_train, X_test, y_test = define_training_data(X, y, train_size=config.train_size, normalize=True)
 
-    torch.save(X_train, train_config["split_folder"] + "train_size_" + str(args.train_size) + "_X_train.pt")
-    torch.save(y_train, train_config["split_folder"] + "train_size_" + str(args.train_size) + "_y_train.pt")
-    torch.save(X_test, train_config["split_folder"] + "train_size_" + str(args.train_size) + "_X_test.pt")
-    torch.save(y_test, train_config["split_folder"] + "train_size_" + str(args.train_size) + "_y_test.pt")
+    torch.save(X_train, train_config["split_folder"] + "train_size_" + str(config.train_size) + "_X_train.pt")
+    torch.save(y_train, train_config["split_folder"] + "train_size_" + str(config.train_size) + "_y_train.pt")
+    torch.save(X_test, train_config["split_folder"] + "train_size_" + str(config.train_size) + "_X_test.pt")
+    torch.save(y_test, train_config["split_folder"] + "train_size_" + str(config.train_size) + "_y_test.pt")
 
     config.X_train_shape = X_train.shape
     config.y_train_shape = y_train.shape
@@ -173,4 +173,4 @@ if __name__ == '__main__':
 
     # saving model checkpoint
     torch.save(model.state_dict(), train_config["model_checkpoint_folder"] + "/training_size_" +
-               str(args.train_size) + "_model_checkpoint.pt")
+               str(config.train_size) + "_model_checkpoint.pt")
