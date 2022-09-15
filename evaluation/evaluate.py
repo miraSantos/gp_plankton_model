@@ -72,7 +72,7 @@ if __name__ == '__main__':
 
     df = pd.read_csv(train_config["data_path"])
 
-    X = torch.load(train_config["split_folder"] + "X_dataset.pt")
+    # X = torch.load(train_config["split_folder"] + "X_dataset.pt")
     X_train = torch.load(train_config["split_folder"] + "train_size_" + str(config.train_size) + "_X_train.pt")
     y_train = torch.load(train_config["split_folder"] + "train_size_" + str(config.train_size) + "_y_train.pt")
     X_test = torch.load(train_config["split_folder"] + "train_size_" + str(config.train_size) + "_X_test.pt")
@@ -83,7 +83,7 @@ if __name__ == '__main__':
                                      str(config.train_size) + "_model_checkpoint.pt"))
     model.eval()
 
-    observed_pred = likelihood(model(X))
+    observed_pred = likelihood(model(df.index))
     print(observed_pred)
     plot_inference(df,X_test, y_test, X_train, y_train)
 
