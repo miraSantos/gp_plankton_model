@@ -52,11 +52,6 @@ def plot_inference(X_test, y_test, X_train, y_train):
 
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description='training size expressed as a fraction')
-    parser.add_argument('--train_size', type=float
-                        )
-    args = parser.parse_args()
-
     with open("train/train_config.yaml", "r") as f:
         train_config = yaml.load(f, Loader=yaml.FullLoader)
 
