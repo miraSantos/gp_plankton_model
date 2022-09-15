@@ -135,7 +135,7 @@ if __name__ == '__main__':
 
     wandb.init(project="syn_model")
     config = wandb.config
-    config.train_size = slurm_id / 10  # passing thru slurm id to parallelize train size
+    config.train_size = int(slurm_id) / 10  # passing thru slurm id to parallelize train size
     config.num_mixtures = train_config["num_mixtures"]
     config.learning_rate = train_config["learning_rate"]
     config.predictor = 'daily_index'
