@@ -83,7 +83,7 @@ if __name__ == '__main__':
                                      str(config.train_size) + "_model_checkpoint.pt"))
     model.eval()
 
-    observed_pred = likelihood(model(df.index))
+    observed_pred = likelihood(model(torch.tensor(df.index, dtype=torch.float32)))
     print(observed_pred)
     plot_inference(df,X_test, y_test, X_train, y_train)
 
