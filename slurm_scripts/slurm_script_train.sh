@@ -2,10 +2,10 @@
 #SBATCH --job-name=gp_model    # Job name
 #SBATCH --mail-type=ALL          # Mail events (NONE, BEGIN, END, FAIL, ALL)
 #SBATCH --mail-user=msantos@whoi.edu     # Where to send mail
-#SBATCH --ntasks=10                    # Run on a single CPU
+#SBATCH --array=1-10                   # how many tasks in the array
 #SBATCH --mem=30gb                     # Job memory request
 #SBATCH --time=10:00:00               # Time limit hrs:min:sec
-#SBATCH --output=logs/gp_model_%j.log   # Standard output and error log
+#SBATCH --output=logs/gp_model_%j_%a.log   # Standard output and error log
 pwd; hostname; date
 
 eval "$(conda shell.bash hook)"
@@ -16,10 +16,8 @@ echo "training model_spectral"
 
 cd /vortexfs1/scratch/msantos/gp_plankton_model/
 
-python /vortexfs1/scratch/msantos/gp_plankton_model/train/train.py
+srun python /vortexfs1/scratch/msantos/gp_plankton_model/train/train.py $SLURM_ARRAY_TASK_ID
 echo "training finished"
 
-python /vortexfs1/scratch/msantos/gp_plankton_model/evaluation/evaluate.py
-echo "evaluation finished"
 
 date
