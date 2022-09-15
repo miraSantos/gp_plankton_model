@@ -169,7 +169,7 @@ if __name__ == '__main__':
 
     optimizer = torch.optim.Adam(model.parameters(), lr=config.learning_rate)
 
-    train_model(likelihood, model, optimizer, learning_rate=config.learning_rate)
+    train_model(likelsihood, model, optimizer, learning_rate=config.learning_rate)
 
     # saving model checkpoint
     torch.save(model.state_dict(), train_config["model_checkpoint_folder"] + "/training_size_" +
