@@ -1,0 +1,14 @@
+model: "spectralGP_model"
+data_path: "datasets/df_merged_daily_phyto_2022-09-07_interpolated.csv"
+res_path: "results/"
+model_checkpoint_folder: "models/model_checkpoints"
+model_checkpoint_file: "models/model_checkpoints/training_size_0.1_model_checkpoint.pt"
+#dependent: "synconc"
+dependent: "log_syn_interpolated"
+
+split_folder: "datasets/split/"
+
+num_mixtures: 100
+learning_rate: 0.1
+training_iter: 2000
+train_size: 0.5

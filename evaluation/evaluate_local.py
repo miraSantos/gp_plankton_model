@@ -1,7 +1,6 @@
 import os
 import sys
 
-
 sys.path.append(os.getcwd())
 
 import gpytorch
@@ -12,12 +11,11 @@ import torch
 import wandb
 import yaml
 from PIL import Image
-
 from evaluation.forecasting_metrics import *
-
 
 import models.spectralGP_model
 import argparse
+
 
 def plot_inference(df,X_test, y_test, X_train, y_train):
     """
@@ -48,8 +46,8 @@ def plot_inference(df,X_test, y_test, X_train, y_train):
     ax.set_ylabel("[log(Syn)] (Normalized")
     ax.legend()
     ax.grid()
-    eval_img = train_config["res_path"] +"/eval_train_size_" + str(config.train_size) + '.png'
-    ax.set_title("Evaluation " + "Training Size " + str(config.train_size*100) + "% of data")
+    eval_img = train_config["res_path"] +"/eval_train_size_" + str(train_config["train_size"]) + '.png'
+    ax.set_title("Evaluation " + "Training Size " + str(train_config["train_size"]*100) + "% of data")
     fig.savefig(eval_img)
     im = Image.open(eval_img)
     wandb.log({"Evaluation": wandb.Image(im)})
@@ -66,18 +64,15 @@ def compute_metrics(metrics, actual, predicted ):
     wandb.log(metrics_dict)
     return metrics_list
 
+
 if __name__ == '__main__':
-    with open("train/train_config.yaml", "r") as f:
+    with open("train/train_config_local.yaml", "r") as f:
         train_config = yaml.load(f, Loader=yaml.FullLoader)
 
-    slurm_id = sys.argv[1]
-    print("slurm_id")
-
     wandb.login()
-
-    wandb.init(project="syn_model")
+    wandb.init(project="syn_model_evaluation")
     config = wandb.config
-    config.train_size = int(slurm_id) /10
+    config.train_size = train_config["train_size"]
     config.num_mixtures = train_config["num_mixtures"]
     config.learning_rate = train_config["learning_rate"]
     config.predictor = 'daily_index'
@@ -88,14 +83,14 @@ if __name__ == '__main__':
     df = pd.read_csv(train_config["data_path"])
 
     X = torch.load(train_config["split_folder"] + "X_dataset.pt")
-    X_train = torch.load(train_config["split_folder"] + "train_size_" + str(config.train_size) + "_X_train.pt")
-    y_train = torch.load(train_config["split_folder"] + "train_size_" + str(config.train_size) + "_y_train.pt")
-    X_test = torch.load(train_config["split_folder"] + "train_size_" + str(config.train_size) + "_X_test.pt")
-    y_test = torch.load(train_config["split_folder"] + "train_size_" + str(config.train_size) + "_y_test.pt")
+    X_train = torch.load(train_config["split_folder"] + "train_size_" + str(train_config["train_size"]) + "_X_train.pt")
+    y_train = torch.load(train_config["split_folder"] + "train_size_" + str(train_config["train_size"]) + "_y_train.pt")
+    X_test = torch.load(train_config["split_folder"] + "train_size_" + str(train_config["train_size"]) + "_X_test.pt")
+    y_test = torch.load(train_config["split_folder"] + "train_size_" + str(train_config["train_size"]) + "_y_test.pt")
 
     model = models.spectralGP_model.SpectralMixtureGPModel(X_train, y_train, likelihood, train_config["num_mixtures"])
     model.load_state_dict(torch.load(train_config["model_checkpoint_folder"] + "/training_size_" +
-                                     str(config.train_size) + "_model_checkpoint.pt"))
+                                     str(train_config["train_size"]) + "_model_checkpoint.pt"))
     model.eval()
 
     observed_pred = likelihood(model(torch.tensor(df.index, dtype=torch.float32)))
@@ -110,3 +105,4 @@ if __name__ == '__main__':
 
     result = compute_metrics(metrics,actual,predicted)
     print(result)
+
