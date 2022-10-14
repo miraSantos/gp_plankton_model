@@ -136,7 +136,8 @@ if __name__ == '__main__':
     config.num_mixtures = train_config["num_mixtures"]
     config.learning_rate = train_config["learning_rate"]
     config.predictor = 'daily_index'
-        config.dependent = train_config["dependent"
+    config.dependent = train_config["dependent"]
+    config.better_lower_bound = train_config["better_lower_bound"]
 
     df = pd.read_csv(train_config["data_path"])
 
@@ -159,7 +160,9 @@ if __name__ == '__main__':
 
     plot_train_test_data(X_train, y_train, X_test, y_test)
 
-    likelihood = gpytorch.likelihoods.GaussianLikelihood()
+    better_lower_bound = config.better_lower_bound
+    likelihood = gpytorch.likelihoods.GaussianLikelihood(noise_constraint=gpytorch.constraints.GreaterThan(better_lower_bound))
+
 
     model = models.spectralGP_model.SpectralMixtureGPModel(X_train, y_train, likelihood, config.num_mixtures)
 

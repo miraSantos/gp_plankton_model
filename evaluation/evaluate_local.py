@@ -59,9 +59,8 @@ def compute_metrics(metrics, actual, predicted ):
     for j in range(len(metrics)):
         metrics_list[j].append(metrics[j](actual,predicted))
 
-    metrics_dict = {metrics[i].__name__: metrics_list[i] for i in range(len(metrics))}
-
-    wandb.log(metrics_dict)
+    df_metrics = pd.DataFrame({"metrics":metrics,"metrics_values":metrics_list})
+    wandb.log({"table":df_metrics})
     return metrics_list
 
 

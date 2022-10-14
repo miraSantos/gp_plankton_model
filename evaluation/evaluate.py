@@ -75,7 +75,7 @@ if __name__ == '__main__':
 
     wandb.login()
 
-    wandb.init(project="syn_model")
+    wandb.init(project="syn_model_evaluation")
     config = wandb.config
     config.train_size = int(slurm_id) /10
     config.num_mixtures = train_config["num_mixtures"]
@@ -93,7 +93,7 @@ if __name__ == '__main__':
     X_test = torch.load(train_config["split_folder"] + "train_size_" + str(config.train_size) + "_X_test.pt")
     y_test = torch.load(train_config["split_folder"] + "train_size_" + str(config.train_size) + "_y_test.pt")
 
-    model = models.spectralGP_model.SpectralMixtureGPModel(X_train, y_train, likelihood, train_config["num_mixtures"])
+    model = models.spectralGP_model.SpectralMixtureGPModel(X_train, y_train, likelihood, config.train_size)
     model.load_state_dict(torch.load(train_config["model_checkpoint_folder"] + "/training_size_" +
                                      str(config.train_size) + "_model_checkpoint.pt"))
     model.eval()
