@@ -136,7 +136,7 @@ if __name__ == '__main__':
     config.num_mixtures = train_config["num_mixtures"]
     config.learning_rate = train_config["learning_rate"]
     config.predictor = 'daily_index'
-        config.dependent = train_config["dependent"]
+        config.dependent = train_config["dependent"
 
     df = pd.read_csv(train_config["data_path"])
 
