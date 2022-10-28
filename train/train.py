@@ -10,7 +10,7 @@ sys.path.append(os.getcwd())
 from tqdm import tqdm
 import yaml
 import models.spectralGP_model
-from train.train_utils import *
+import train.train_utils
 
 
 import wandb  # library for tracking and visualization
