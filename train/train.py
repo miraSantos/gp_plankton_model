@@ -26,7 +26,8 @@ if __name__ == '__main__':
     slurm_id = sys.argv[1]
     print("slurm_id")
 
-    wandb.init(project="syn_model_slurm_spectral_only",mode = "disabled")
+    wandb.init(project="syn_model_slurm_spectral_only")
+    # wandb.init(project="syn_model_slurm_spectral_only",mode = "disabled")
 
     config = wandb.config
     config.train_size = int(slurm_id) / 10  # passing thru slurm id to parallelize train size
