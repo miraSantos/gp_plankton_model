@@ -10,8 +10,7 @@ sys.path.append(os.getcwd())
 from tqdm import tqdm
 import yaml
 import models.spectralGP_model
-import train.train_utils
-
+from train.train_utils import *
 
 import wandb  # library for tracking and visualization
 
@@ -20,7 +19,7 @@ wandb.login()
 
 
 if __name__ == '__main__':
-    with open("train/spectral_model_config.yaml", "r") as f:
+    with open("train/spectral_model_config_local.yaml", "r") as f:
         train_config = yaml.load(f, Loader=yaml.FullLoader)
 
     wandb.login()
