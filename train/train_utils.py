@@ -115,7 +115,7 @@ def plot_train_test_data(df,x_train, y_train, x_test, y_test,config):
     fig, ax = plt.subplots(figsize=(width, height))
     ax.scatter(df.date[:len(x_train)], y_train, color="blue", label="training data")
     ax.scatter(df.date[len(x_train):], y_test, color="red", label="testing data")
-    ax.axvline(x=df.date[len(x_train)], color="red", label="train_test_splot")
+    # ax.axvline(x=df.date[len(x_train)], color="red", label="train_test_splot")
     ax.set_title("Train Test Split " + "Training Size " + str(config.train_size * 100) + "% of data")
     ax.set_xlabel("Year")
     ax.set_ylabel("[log(Syn)] (Normalized")
