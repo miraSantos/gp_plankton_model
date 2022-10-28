@@ -55,6 +55,12 @@ if __name__ == '__main__':
     df_merged = df_env_daily.combine_first(df_syn_daily).combine_first(df_nut).combine_first(df_conc)
     df_merged = df_merged.replace(r'^\s*$', np.nan, regex=True)
 
-    save_path = "/dos/MIT-WHOI/data/2022/df_merged_daily_phyto_"+str(datetime.date.today())
+    historical_mean = df_merged.groupby("doy_numeric").mean()["synconc"]
+
+    index_list = ~(df_merged.synconc.isna())
+    df_merged["synconc_subtracted"] = np.nan
+    df_merged.loc[df_merged.index[index_list], "synconc_subtracted"] = df_merged.loc[df_merged.index[index_list],"synconc"].values - historical_mean[df_merged.loc[df_merged.index[index_list], "doy_numeric"]].values
+
+    save_path = "/home/mira/PycharmProjects/gp_plankton_model/datasets/df_merged_daily_phyto_"+str(datetime.date.today())
     df_merged.to_pickle(save_path+".pkl")
     df_merged.to_csv(save_path+".csv",encoding='utf-8')

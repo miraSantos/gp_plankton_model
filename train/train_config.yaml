@@ -1,5 +1,6 @@
 model: "spectralGP_model"
-data_path: "datasets/df_merged_daily_phyto_2022-09-07_interpolated.csv"
+data_path: "datasets/df_merged_daily_phyto_2022-09-07.csv"
+#data_path: "/dos/MIT-WHOI/data/2022/dfmerged_daily_phyto_2022_Oct.csv"
 res_path: "results/"
 model_checkpoint_folder: "models/model_checkpoints"
 model_checkpoint_file: "models/model_checkpoints/training_size_0.1_model_checkpoint.pt"
