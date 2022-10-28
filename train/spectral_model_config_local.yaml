@@ -1,10 +1,8 @@
 model: "spectralGP_model"
 split_folder: "/home/mira/PycharmProjects/gp_plankton_model/datasets/split/"
 
-predictor: "daily_index"
 
 data_path: "datasets/df_merged_daily_phyto_2022-10-21.csv"
-dependent: "synconc"
 
 #MODEL CHECKPOINT FOLDERS
 model_checkpoint_folder: "models/model_checkpoints"
