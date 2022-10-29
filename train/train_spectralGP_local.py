@@ -38,7 +38,7 @@ if __name__ == '__main__':
     print(df.head())
     dfsubset = df.dropna(subset=config.dependent) #dropping na values #TODO: fix spectral model so that it can handle missing observations
     X = torch.tensor(dfsubset.index, dtype=torch.float32)
-    y = torch.tensor(dfsubset[config.dependent].values, dtype=torch.float32)
+    y = torch.tensor(np.log(dfsubset[config.dependent].values), dtype=torch.float32)
 
     #defining training data based on testing split
     X_train, y_train, X_test, y_test = define_training_data(X, y, train_size=config.train_size, normalize=True)

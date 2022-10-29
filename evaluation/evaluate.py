@@ -75,9 +75,9 @@ if __name__ == '__main__':
 
     wandb.login()
 
-    wandb.init(project="syn_model_evaluation")
+    wandb.init(project="syn_model_evaluation", mode="disabled")
     config = wandb.config
-    config.train_size = int(slurm_id) /10
+    config.train_size = int(slurm_id)/10
     config.num_mixtures = train_config["mixtures"]
     config.learning_rate = train_config["learning_rate"]
     config.predictor = 'daily_index'
@@ -112,7 +112,7 @@ if __name__ == '__main__':
     # plot inference
     plot_inference(dfsubset, X_test, y_test, X_train, y_train)
 
-    metrics = [me, rae, mape, rmse, mda]  # list of metrics to compute see forecasting_metrics.p
+    metrics = [me, rae, mape, rmse, mda]  # list of metrics to compute see forecasting_metrics.py
     actual = y_test.numpy()
     predicted = observed_pred[len(X_train):].mean.detach().numpy()
     print(len(actual))

@@ -43,14 +43,15 @@ def plot_inference(df,X_test, y_test, X_train, y_train):
     ax[0].xaxis.set_major_locator(mdates.YearLocator())
     ax[0].xaxis.set_major_formatter(mdates.DateFormatter("%Y"))
     ax[0].set_xlabel("Year")
-    ax[0].set_ylabel("[log(Syn)] (Normalized")
+    ax[0].set_ylabel("Syn Concentration")
     ax[0].legend()
     ax[0].grid()
     ax[0].set_title("Evaluation " + "Training Size " + str(train_config["train_size"]*100) + "% of data")
 
 
-    ax[1].scatter(df.doy_numeric[len(X_train):], y_test, label="observations")
-    ax[1].scatter(df.doy_numeric[len(X_train):], observed_pred.mean.detach().numpy()[len(X_train):],label = "prediction")
+    #plotting with DOY on the x-axis
+    ax[1].scatter(df.doy_numeric[len(X_train):], y_test, label="observations",c = "green")
+    ax[1].scatter(df.doy_numeric[len(X_train):], observed_pred.mean.detach().numpy()[len(X_train):],label = "prediction",c = "blue")
     ax[1].set_xlabel("Day of the Year")
     ax[1].set_ylabel("Syn Conc")
     ax[1].legend()
