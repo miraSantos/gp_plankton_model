@@ -16,7 +16,7 @@ echo "training model_spectral"
 
 cd /vortexfs1/scratch/msantos/gp_plankton_model/
 
-srun python /vortexfs1/scratch/msantos/gp_plankton_model/train/train.py $SLURM_ARRAY_TASK_ID
+srun python -m  train.train $SLURM_ARRAY_TASK_ID
 echo "training finished"
 
 
