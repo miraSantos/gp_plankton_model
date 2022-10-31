@@ -11,12 +11,12 @@ split_folder: "datasets/split/"
 
 #HYPERPARAMTERS
 better_lower_bound: 0.00001
-mixtures: 200
+mixtures: 1000
 num_dims: 1
 noise_value: 0.01
 
 learning_rate: 0.1
-training_iter: 2000
+training_iter: 400
 train_size: 0.2
 
 noise_prior_loc: 0.0
