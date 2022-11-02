@@ -6,9 +6,7 @@ import sys
 
 sys.path.append(os.getcwd())
 
-import yaml
-import models.spectralGP_model
-from train.train_utils import *
+from train_utils import *
 
 import wandb  # library for tracking and visualization
 

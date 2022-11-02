@@ -18,7 +18,7 @@ noise_value: 0.01
 
 learning_rate: 0.1
 training_iter: 2000
-train_size: 0.2
+train_size: 0.5
 
 noise_prior_loc: 0.0
 noise_prior_scale: 0.01
