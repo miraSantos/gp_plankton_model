@@ -16,7 +16,7 @@ echo "training model_spectral"
 
 cd /vortexfs1/scratch/msantos/gp_plankton_model/
 
-srun --ntasks=5 -l --multi_prog slurm_scripts/slurm_config.conf
+srun --ntasks=5 -l --multi-prog slurm_scripts/slurm_config.conf
 echo "training finished"
 
 
