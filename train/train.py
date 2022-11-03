@@ -25,14 +25,15 @@ if __name__ == '__main__':
 
     slurm_id = sys.argv[1]
     num_mixtures = sys.argv[2]
-	print("slurm_id")
+    print("slurm_id: "+str(slurm_id))
+    print("num_mixtures: "+str(num_mixtures))	
 
     #wandb.init(project="syn_model_slurm_spectral_only")
     wandb.init(project="syn_model_slurm_spectral_only",mode = "disabled")
 
     config = wandb.config
     config.train_size = int(slurm_id) / 10  # passing thru slurm id to parallelize train size
-    config.mixtures = num_mixtures
+    config.mixtures = int(num_mixtures)
     config.learning_rate = train_config["learning_rate"]
     config.predictor = train_config["predictor"]
     config.dependent = train_config["dependent"]
