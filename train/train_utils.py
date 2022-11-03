@@ -107,7 +107,7 @@ def plot_train_test_data(df,x_train, y_train, x_test, y_test,config):
     #     xname="Number of Observations"
     # )})
 
-    df.loc['date'] = pd.to_datetime(df.loc['date'], format="%Y-%m-%d")
+    df['date'] = pd.to_datetime(df['date'], format="%Y-%m-%d")
 
 
     width = 20
