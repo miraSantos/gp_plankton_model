@@ -1,0 +1,7 @@
+/vortexfs1/scratch/msantos/gp_plankton_model/slurm_scripts/sweep
+pn031
+Fri Nov  4 11:37:08 EDT 2022
+training model_spectral
+srun: error: Could not open multi_prog config file slurm_scripts/sweep_slurm.conf
+training finished
+Fri Nov  4 11:37:13 EDT 2022
