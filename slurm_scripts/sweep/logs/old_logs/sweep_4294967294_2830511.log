@@ -1,0 +1,48 @@
+/vortexfs1/scratch/msantos/gp_plankton_model/slurm_scripts/sweep
+pn031
+Fri Nov  4 11:49:59 EDT 2022
+training model_spectral
+3: Traceback (most recent call last):
+3:   File "/vortexfs1/home/msantos/.conda/envs/gpytorch/lib/python3.9/runpy.py", line 197, in _run_module_as_main
+0: Traceback (most recent call last):
+0:   File "/vortexfs1/home/msantos/.conda/envs/gpytorch/lib/python3.9/runpy.py", line 197, in _run_module_as_main
+1: Traceback (most recent call last):
+1:   File "/vortexfs1/home/msantos/.conda/envs/gpytorch/lib/python3.9/runpy.py", line 197, in _run_module_as_main
+1:     return _run_code(code, main_globals, None,
+1:   File "/vortexfs1/home/msantos/.conda/envs/gpytorch/lib/python3.9/runpy.py", line 87, in _run_code
+0:     return _run_code(code, main_globals, None,
+0:   File "/vortexfs1/home/msantos/.conda/envs/gpytorch/lib/python3.9/runpy.py", line 87, in _run_code
+2: Traceback (most recent call last):
+2:   File "/vortexfs1/home/msantos/.conda/envs/gpytorch/lib/python3.9/runpy.py", line 197, in _run_module_as_main
+2:     return _run_code(code, main_globals, None,
+2:   File "/vortexfs1/home/msantos/.conda/envs/gpytorch/lib/python3.9/runpy.py", line 87, in _run_code
+0:     exec(code, run_globals)
+0:   File "/vortexfs1/scratch/msantos/gp_plankton_model/train/sweep.py", line 72, in <module>
+1:     exec(code, run_globals)
+1:   File "/vortexfs1/scratch/msantos/gp_plankton_model/train/sweep.py", line 72, in <module>
+2:     exec(code, run_globals)
+2:   File "/vortexfs1/scratch/msantos/gp_plankton_model/train/sweep.py", line 72, in <module>
+1:     if config["sweep"]:
+1: KeyError: 'sweep'
+4: Traceback (most recent call last):
+4:   File "/vortexfs1/home/msantos/.conda/envs/gpytorch/lib/python3.9/runpy.py", line 197, in _run_module_as_main
+0:     if config["sweep"]:
+0: KeyError: 'sweep'
+3:     return _run_code(code, main_globals, None,
+3:   File "/vortexfs1/home/msantos/.conda/envs/gpytorch/lib/python3.9/runpy.py", line 87, in _run_code
+2:     if config["sweep"]:
+2: KeyError: 'sweep'
+4:     return _run_code(code, main_globals, None,
+4:   File "/vortexfs1/home/msantos/.conda/envs/gpytorch/lib/python3.9/runpy.py", line 87, in _run_code
+4:     exec(code, run_globals)
+4:   File "/vortexfs1/scratch/msantos/gp_plankton_model/train/sweep.py", line 72, in <module>
+3:     exec(code, run_globals)
+3:   File "/vortexfs1/scratch/msantos/gp_plankton_model/train/sweep.py", line 72, in <module>
+3:     if config["sweep"]:
+3: KeyError: 'sweep'
+4:     if config["sweep"]:
+4: KeyError: 'sweep'
+srun: error: pn032: tasks 3-4: Exited with exit code 1
+srun: error: pn031: tasks 0-2: Exited with exit code 1
+training finished
+Fri Nov  4 11:50:26 EDT 2022
