@@ -20,7 +20,7 @@ if __name__ == '__main__':
 
     df = pd.read_csv(config["data_path"], low_memory=False)
     df.loc[:,'date'] = pd.to_datetime(df.loc[:,'date'], format="%Y-%m-%d") #required or else dates start at 1971! (WEIRD BUG HERE)
-    dfsubset = df.dropna(subset=[config["dependent"],config["predictor"]]) #dropping na values #TODO: fix spectral model so that it can handle missing observations
+    dfsubset = df.dropna(subset=[config["dependent"], config["predictor"]]) #dropping na values #TODO: fix spectral model so that it can handle missing observations
     X = torch.tensor(dfsubset.loc[:,config["predictor"]].reset_index().to_numpy(), dtype=torch.float32)
     if config["take_log"]==True:
         dependent = np.log(dfsubset[config["dependent"]].values)
@@ -53,6 +53,6 @@ if __name__ == '__main__':
     train_model(likelihood, model, optimizer, config, X_train, y_train, learning_rate=config["parameters"]["lr"])
 
     # # saving model checkpoint
-    model_save_path = config["model_checkpoint_folder"] + "/spectral_model_training_size_" + str(config["train_size"]) + "_model_checkpoint.pt"
+    model_save_path = config["model_checkpoint_folder"] + "/spectral_model_training_size_" + str(config["parameters"]["train_size"]) + "_model_checkpoint.pt"
     torch.save(model.state_dict(), model_save_path)
     wandb.save(model_save_path)

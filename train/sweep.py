@@ -52,6 +52,13 @@ def main_sweep():
     observed_pred = likelihood(model(torch.tensor(dfsubset.index, dtype=torch.float32)))
     actual = y_test.numpy()
     predicted = observed_pred[len(X_train):].mean.detach().numpy()
+
+    plot_inference(dfsubset, X_test, y_test, X_train, y_train)
+
+    metrics = [me, rae, mape, rmse,mda] #list of metrics to compute see forecasting_metrics.p
+    result = compute_metrics(metrics,actual,predicted)
+    wandb.log({"result":result}
+
     wandb.log({
         'mean_error': me(actual, predicted),
         'rel_abs_error': rae(actual, predicted),
