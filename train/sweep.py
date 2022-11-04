@@ -45,7 +45,9 @@ def main_sweep():
     optimizer = torch.optim.Adam(model.parameters(), lr=config["parameters"]["lr"])
     wandb.watch(model, log="all")
     train_model(likelihood, model, optimizer, config, X_train, y_train, learning_rate=config["parameters"]["lr"])
-    # torch.save(model.state_dict(), model_save_path)
+
+    model_save_path = config["model_checkpoint_folder"] + "/spectral_model_training_size_" + str(config["train_size"]) + "_model_checkpoint.pt"
+    torch.save(model.state_dict(), model_save_path)
     wandb.save(model.state.dict())
     observed_pred = likelihood(model(torch.tensor(dfsubset.index, dtype=torch.float32)))
     actual = y_test.numpy()

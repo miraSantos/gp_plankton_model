@@ -64,7 +64,7 @@ def plot_inference(df,X_test, y_test, X_train, y_train):
 
 
 if __name__ == '__main__':
-    with open("train/config_defaults.yaml", "r") as f:
+    with open("train/local_config.yaml", "r") as f:
         train_config = yaml.load(f, Loader=yaml.FullLoader)
 
     wandb.login()

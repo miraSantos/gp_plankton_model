@@ -9,7 +9,7 @@ if __name__ == '__main__':
 
     parser = argparse.ArgumentParser()
     parser.add_argument("--cfg", help="specify path to configuration file (yaml) ", type=str,
-                        default="cfg/config_defaults.yaml")
+                        default="cfg/local_config.yaml")
     args = parser.parse_args()
 
     with open(args.cfg, "r") as f:
