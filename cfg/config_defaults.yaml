@@ -12,8 +12,6 @@ take_log:
 wandb_mode: "disabled"
 sweep: true
 
-
-
 res_path: "results/"
 
 parameters:

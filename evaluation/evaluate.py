@@ -67,7 +67,7 @@ def compute_metrics(metrics, actual, predicted ):
     return metrics_list
 
 if __name__ == '__main__':
-    with open("train/spectral_model_config.yaml", "r") as f:
+    with open("train/sweep_slurm_config.yaml", "r") as f:
         train_config = yaml.load(f, Loader=yaml.FullLoader)
 
     slurm_id = sys.argv[1]
