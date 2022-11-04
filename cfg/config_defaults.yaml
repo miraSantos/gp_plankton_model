@@ -1,0 +1,30 @@
+model: "spectralGP_model"
+split_folder: "/home/mira/PycharmProjects/gp_plankton_model/datasets/split/"
+model_checkpoint_folder: "models/model_checkpoints"
+
+predictor: "daily_index"
+dependent: "synconc"
+data_path: "datasets/df_merged_daily_phyto_2022-10-21.csv"
+take_log:
+  desc: "option to take log of of dependent variable"
+  value: true
+
+wandb_mode: "disabled"
+sweep: true
+
+
+
+res_path: "results/"
+
+parameters:
+  train_iter: 2000
+  train_size: 0.5
+  lr: 0.1
+  better_lower_bound: 0.00001
+  mixtures: 200
+  num_dims: 1
+  noise_value: 0.01
+  noise_prior_loc: 0.0
+  noise_prior_scale: 0.01
+
+

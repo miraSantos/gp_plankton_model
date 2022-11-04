@@ -54,11 +54,6 @@ def define_training_data(X, y, train_size, normalize=True):
         y = normalize_tensor(y)
 
     X_train, y_train, X_test, y_test = train_test_split(X, y, train_size)
-    print("X_train shape: ", X_train.shape)
-    print("y_train shape: ", y_train.shape)
-    print("X_train dtype: ", X_train.dtype)
-    print("y_train dtpye: ", y_train.dtype)
-
     return X_train, y_train, X_test, y_test
 
 
@@ -76,13 +71,13 @@ def train_model(likelihood, model, optimizer,config,x_train, y_train,learning_ra
     # "Loss" for GPs - the marginal log likelihood
     mll = gpytorch.mlls.ExactMarginalLogLikelihood(likelihood, model)
 
-    pbar = tqdm(range(config.training_iter), leave=None)
+    pbar = tqdm(range(config["parameters"]["train_iter"]), leave=None)
     for i in pbar:
         optimizer.zero_grad()
         output = model(x_train)
         loss = -mll(output, y_train)
         loss.backward()
-        pbar.set_description('Iter %d/%d - Loss: %.3f' % (i + 1, config.training_iter, loss.item()))
+        pbar.set_description('Iter %d/%d - Loss: %.3f' % (i + 1, config["parameters"]["train_iter"], loss.item()))
         wandb.log({"Test loss": loss.item()})
         optimizer.step()
 
@@ -107,8 +102,6 @@ def plot_train_test_data(df,x_train, y_train, x_test, y_test,config):
     #     xname="Number of Observations"
     # )})
 
-    df['date'] = pd.to_datetime(df['date'], format="%Y-%m-%d")
-
 
     width = 20
     height = 5
@@ -116,19 +109,18 @@ def plot_train_test_data(df,x_train, y_train, x_test, y_test,config):
     ax.scatter(df.date[:len(x_train)], y_train, color="blue", label="training data")
     ax.scatter(df.date[len(x_train):], y_test, color="red", label="testing data")
     # ax.axvline(x=df.date[len(x_train)], color="red", label="train_test_splot")
-    ax.set_title("Train Test Split " + "Training Size " + str(config.train_size * 100) + "% of data")
+    ax.set_title("Dependent: "+ config["dependent"] + " Predictor: "+ config["predictor"] + " " + str(config["parameters"]["train_size"] * 100) + "% of data")
     ax.set_xlabel("Year")
-    ax.set_ylabel("[log(Syn)] (Normalized")
+    ax.set_ylabel(config["dependent"])
     ax.xaxis.set_major_locator(mdates.YearLocator())
     ax.xaxis.set_major_formatter(mdates.DateFormatter("%Y"))
-
     ax.grid()
+    plt.show()
 
     # saving image
-    train_test_img = config.res_path + 'train_test_split_train_size_' + str(
-        config.train_size) + '.png'
+    train_test_img = config["res_path"] + "/" + config["dependent"] +"/"+ 'train_test_split_train_size_' + str(
+        config["parameters"]["train_size"]) + '.png'
     fig.savefig(train_test_img)
-    im = Image.open(train_test_img)
-    wandb.log({"Pre-Training Split": wandb.Image(im)})
-
+    # wandb.save(train_test_img)
+    # wandb.log({"Pre-Training Split": wandb.Image(fig)})
 

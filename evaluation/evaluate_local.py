@@ -62,20 +62,9 @@ def plot_inference(df,X_test, y_test, X_train, y_train):
 
 
 
-def compute_metrics(metrics, actual, predicted):
-
-    metrics_list = [[] for _ in range(len(metrics))]  # list of lists to store error metric results
-
-    for j in range(len(metrics)):
-        metrics_list[j].append(metrics[j](actual,predicted))
-
-    df_metrics = pd.DataFrame({"metrics":metrics,"metrics_values":metrics_list})
-    wandb.log({"table":df_metrics})
-    return metrics_list
-
 
 if __name__ == '__main__':
-    with open("train/spectral_model_config_local.yaml", "r") as f:
+    with open("train/config_defaults.yaml", "r") as f:
         train_config = yaml.load(f, Loader=yaml.FullLoader)
 
     wandb.login()
@@ -110,6 +99,7 @@ if __name__ == '__main__':
     model.eval()
 
     #generrate predictions
+
     observed_pred = likelihood(model(torch.tensor(dfsubset.index, dtype=torch.float32)))
     print(observed_pred)
 
