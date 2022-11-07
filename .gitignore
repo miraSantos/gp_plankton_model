@@ -4,4 +4,4 @@ slurm_scripts/logs/*
 wandb/*
 wandb
 !.gitignore
-
+slurm_scripts/sweep/logs/*

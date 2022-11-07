@@ -98,4 +98,4 @@ if __name__ == '__main__':
     plot_train_test_data(dfsubset, X_train, y_train, X_test, y_test, config)
     # # saving model checkpoint
     sweep_id = wandb.sweep(sweep=sweep_config, project="syn_model_sweep")
-    wandb.agent(sweep_id, function=main_sweep ,count=1)
+    wandb.agent(sweep_id, function=main_sweep ,count=4)
