@@ -9,7 +9,7 @@ take_log:
   desc: "option to take log of of dependent variable"
   value: true
 
-wandb_mode: null #"disabled" is other option
+wandb_mode: "disabled" #"disabled" is other option
 sweep: false
 
 res_path: "results/"
