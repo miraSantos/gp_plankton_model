@@ -65,7 +65,7 @@ def main_sweep():
 
     metrics = [me, rae, mape, rmse,mda] #list of metrics to compute see forecasting_metrics.p
     result = compute_metrics(metrics,actual,predicted)
-    wandb.log({"result":result}
+    wandb.log({"result":result})
 
     wandb.log({
         'mean_error': me(actual, predicted),
@@ -97,5 +97,4 @@ if __name__ == '__main__':
     dfsubset, X_train, y_train, X_test, y_test = load_test_train()
     plot_train_test_data(dfsubset, X_train, y_train, X_test, y_test, config)
     # # saving model checkpoint
-    sweep_id = wandb.sweep(sweep=sweep_config, project="syn_model_sweep")
-    wandb.agent(sweep_id, function=main_sweep ,count=4)
+    main_sweep()
