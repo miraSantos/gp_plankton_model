@@ -9,7 +9,13 @@ def load_test_train():
     df = pd.read_csv(config["data_path"], low_memory=False)
     df.loc[:,'date'] = pd.to_datetime(df.loc[:,'date'], format="%Y-%m-%d") #required or else dates start at 1971! (WEIRD BUG HERE)
     dfsubset = df.dropna(subset=config["dependent"]) #dropping na values #TODO: fix spectral model so that it can handle missing observations
-    X = torch.tensor(dfsubset.index, dtype=torch.float32)
+
+    if config["2D"]:
+        X = torch.tensor(dfsubset.loc[:, config["predictor"]].reset_index().to_numpy(),
+                         dtype=torch.float32)  # 2D tensor
+    else:
+        X = torch.tensor(dfsubset.index, dtype=torch.float32)
+
     if config["take_log"]==True:
         dependent = np.log(dfsubset[config["dependent"]].values)
     else:
@@ -44,11 +50,13 @@ def main_sweep():
 
     optimizer = torch.optim.Adam(model.parameters(), lr=config["parameters"]["lr"])
     wandb.watch(model, log="all")
-    train_model(likelihood, model, optimizer, config, X_train, y_train, learning_rate=config["parameters"]["lr"])
+    train_model(likelihood, model, optimizer, config, X_train, y_train,
+                learning_rate=config["parameters"]["lr"])
 
     model_save_path = config["model_checkpoint_folder"] + "/spectral_model_training_size_" + str(config["train_size"]) + "_model_checkpoint.pt"
     torch.save(model.state_dict(), model_save_path)
     wandb.save(model.state.dict())
+    wandb.save(model_save_path)
     observed_pred = likelihood(model(torch.tensor(dfsubset.index, dtype=torch.float32)))
     actual = y_test.numpy()
     predicted = observed_pred[len(X_train):].mean.detach().numpy()

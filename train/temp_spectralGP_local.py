@@ -21,7 +21,7 @@ if __name__ == '__main__':
     df = pd.read_csv(config["data_path"], low_memory=False)
     df.loc[:,'date'] = pd.to_datetime(df.loc[:,'date'], format="%Y-%m-%d") #required or else dates start at 1971! (WEIRD BUG HERE)
     dfsubset = df.dropna(subset=[config["dependent"], config["predictor"]]) #dropping na values #TODO: fix spectral model so that it can handle missing observations
-    X = torch.tensor(dfsubset.loc[:,config["predictor"]].reset_index().to_numpy(), dtype=torch.float32)
+    X = torch.tensor(dfsubset.loc[:,config["predictor"]].reset_index().to_numpy(), dtype=torch.float32) #2D tensor
     if config["take_log"]==True:
         dependent = np.log(dfsubset[config["dependent"]].values)
     else:
@@ -44,15 +44,20 @@ if __name__ == '__main__':
 
     plot_train_test_data(dfsubset, X_train, y_train, X_test, y_test, config)
 
-    likelihood = gpytorch.likelihoods.GaussianLikelihoodWithMissingObs(noise_prior=gpytorch.priors.NormalPrior(config["parameters"]["noise_prior_loc"], config["parameters"]["noise_prior_scale"]))
-    model = models.spectralGP_model.SpectralMixtureGPModel(X_train, y_train, likelihood, config["parameters"]["mixtures"], config["parameters"]['num_dims'])
+    likelihood = gpytorch.likelihoods.GaussianLikelihoodWithMissingObs(
+        noise_prior=gpytorch.priors.NormalPrior(config["parameters"]["noise_prior_loc"],
+                                                config["parameters"]["noise_prior_scale"]))
+    model = models.spectralGP_model.SpectralMixtureGPModel(X_train, y_train, likelihood,
+                                                           config["parameters"]["mixtures"],
+                                                           config["parameters"]['num_dims'])
 
     wandb.watch(model, log="all")
 
     optimizer = torch.optim.Adam(model.parameters(), lr=config["parameters"]["lr"])
-    train_model(likelihood, model, optimizer, config, X_train, y_train, learning_rate=config["parameters"]["lr"])
+    train_model(likelihood, model, optimizer, config, X_train, y_train,
+                learning_rate=config["parameters"]["lr"])
 
     # # saving model checkpoint
-    model_save_path = config["model_checkpoint_folder"] + "/spectral_model_training_size_" + str(config["parameters"]["train_size"]) + "_model_checkpoint.pt"
+    model_save_path = config["model_checkpoint_folder"] + "/temperature_spectral_model_training_size_" + str(config["parameters"]["train_size"]) + "_model_checkpoint.pt"
     torch.save(model.state_dict(), model_save_path)
     wandb.save(model_save_path)
