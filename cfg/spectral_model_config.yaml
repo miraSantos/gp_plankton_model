@@ -12,7 +12,7 @@ take_log:
   desc: "option to take log of of dependent variable"
   value: true
 
-wandb_mode: "disabled"
+wandb_mode: null
 sweep: true
 
 parameters:
