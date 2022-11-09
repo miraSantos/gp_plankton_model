@@ -7,3 +7,4 @@ wandb
 slurm_scripts/sweep/logs/*
 evaluate/__pycache__/*
 */__pycache__/*
+results/*
