@@ -78,8 +78,8 @@ def main_sweep():
 if __name__ == '__main__':
 
     parser = argparse.ArgumentParser()
-    parser.add_argument("--cfg", help="specify path to configuration file (yaml) " ,type=str)
-    parser.add_argument("--sweep", help="specify path to sweep configuration file (yaml) " ,type=str)
+    parser.add_argument("--cfg", help="specify path to configuration file (yaml) " ,type=str,default = "cfg/slurm_config.yaml")
+    parser.add_argument("--sweep", help="specify path to sweep configuration file (yaml) " ,type=str,default = "cfg/sweep_config.yaml")
     args = parser.parse_args()
 
     #loading in yaml files
