@@ -17,6 +17,7 @@ echo "training model_spectral"
 cd /vortexfs1/scratch/msantos/gp_plankton_model/
 
 srun --ntasks=5 --cpus-per-task=1 --mem-per-cpu=50G -l --multi-prog slurm_scripts/sweep/config.conf
+
 echo "training finished"
 
 date

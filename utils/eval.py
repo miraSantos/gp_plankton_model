@@ -21,7 +21,6 @@ import wandb  # library for tracking and visualization
 from evaluation.forecasting_metrics import *
 
 
-
 def compute_metrics(metrics, actual, predicted):
 
     metrics_list = [[] for _ in range(len(metrics))]  # list of lists to store error metric results

@@ -6,7 +6,7 @@
 #SBATHC --cpus-per-task=1
 #SBATCH --mem-per-cpu=20G                     # Job memory request
 #SBATCH --time=10:00:00               # Time limit hrs:min:sec
-#SBATCH --output=/vortexfs1/scratch/msantos/gp_plankton_model/slurm_scripts/sweep/logs/array_sweep_%a_%j.log   # Standard output and error log
+#SBATCH --output=/vortexfs1/scratch/msantos/gp_plankton_model/slurm_scripts/sweep/logs/array_sweep_%j.log   # Standard output and error log
 pwd; hostname; date
 
 eval "$(conda shell.bash hook)"
@@ -17,8 +17,12 @@ echo "training model_spectral"
 
 cd /vortexfs1/scratch/msantos/gp_plankton_model
 
-wandb agent mira_thesis/syn_model_sweep/0fhkf9kl
+wandb sweep --project syn_model_sweep cfg/sweep_syn_config.yaml 2> syn_temp.file
 
-echo "training finished"
+for i in {1..4}; do
+  srun --ntasks=1 --tasks-per-cpu=1 --mem-per-cpu=20G eval "$(awk 'NR==4 {print $6, $7, $8}' syn_temp.file)"
+  done
+
+echo "sweep finished"
 
 date

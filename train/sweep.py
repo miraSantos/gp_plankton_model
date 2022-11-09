@@ -6,54 +6,54 @@ import wandb  # library for tracking and visualization
 from utils.eval import *
 
 def load_test_train():
-    df = pd.read_csv(config["data_path"], low_memory=False)
+    df = pd.read_csv(wandb.config.data_path, low_memory=False)
     df.loc[:,'date'] = pd.to_datetime(df.loc[:,'date'], format="%Y-%m-%d") #required or else dates start at 1971! (WEIRD BUG HERE)
-    dfsubset = df.dropna(subset=config["dependent"]) #dropping na values #TODO: fix spectral model so that it can handle missing observations
+    dfsubset = df.dropna(subset=wandb.config.dependent) #dropping na values #TODO: fix spectral model so that it can handle missing observations
 
-    if config["2D"]:
-        X = torch.tensor(dfsubset.loc[:, config["predictor"]].reset_index().to_numpy(),
+    if wandb.config.num_dims_predictor >= 1:
+        X = torch.tensor(dfsubset.loc[:, wandb.config.predictor].reset_index().to_numpy(),
                          dtype=torch.float32)  # 2D tensor
     else:
         X = torch.tensor(dfsubset.index, dtype=torch.float32)
 
-    if config["take_log"]==True:
-        dependent = np.log(dfsubset[config["dependent"]].values)
+    if wandb.config.take_log==True:
+        dependent = np.log(dfsubset[wandb.config.dependent].values)
     else:
-        dependent = dfsubset[config["dependent"]].values
+        dependent = dfsubset[wandb.config.dependent].values
     y = torch.tensor(dependent, dtype=torch.float32)
 
     # #defining training data based on testing split
-    X_train, y_train, X_test, y_test = define_training_data(X, y, train_size=config["parameters"]["train_size"], normalize=True)
+    X_train, y_train, X_test, y_test = define_training_data(X, y, train_size=wandb.config.train_size, normalize=True)
 
-    torch.save(X, config["split_folder"] + config["dependent"] + "X_dataset.pt")
-    torch.save(X_train, config["split_folder"] + config["dependent"] + "train_size_" + str(config["parameters"]["train_size"]) + "_X_train.pt")
-    torch.save(y_train, config["split_folder"] + config["dependent"] + "train_size_" + str(config["parameters"]["train_size"]) + "_y_train.pt")
-    torch.save(X_test, config["split_folder"] + config["dependent"] + "train_size_" + str(config["parameters"]["train_size"]) + "_X_test.pt")
-    torch.save(y_test, config["split_folder"] + config["dependent"] + "train_size_" + str(config["parameters"]["train_size"]) + "_y_test.pt")
+    torch.save(X, wandb.config.split_folder + wandb.config.dependent + "X_dataset.pt")
+    torch.save(X_train, wandb.config.split_folder + wandb.config.dependent + "train_size_" + str(wandb.config.train_size) + "_X_train.pt")
+    torch.save(y_train, wandb.config.split_folder + wandb.config.dependent + "train_size_" + str(wandb.config.train_size) + "_y_train.pt")
+    torch.save(X_test, wandb.config.split_folder + wandb.config.dependent + "train_size_" + str(wandb.config.train_size) + "_X_test.pt")
+    torch.save(y_test, wandb.config.split_folder + wandb.config.dependent + "train_size_" + str(wandb.config.train_size) + "_y_test.pt")
 
-    config["X_train_shape"] = X_train.shape
-    config["y_train_shape"] = y_train.shape
-    config["X_test_shape"] = X_test.shape
-    config["y_test_shape"] = y_test.shape
+    wandb.config.X_train_shape = X_train.shape
+    wandb.config.y_train_shape = y_train.shape
+    wandb.config.X_test_shape = X_test.shape
+    wandb.config.y_test_shape = y_test.shape
 
     return dfsubset, X_train, y_train, X_test, y_test
 
 def main_sweep():
-    wandb.init(project="testing", config=config, mode=config["wandb_mode"])
+    run = wandb.init(project="testing", mode="disabled")
 
     likelihood = gpytorch.likelihoods.GaussianLikelihoodWithMissingObs(
-        noise_prior=gpytorch.priors.NormalPrior(config["parameters"]["noise_prior_loc"],
-                                                config["parameters"]["noise_prior_scale"]))
+        noise_prior=gpytorch.priors.NormalPrior(wandb.config.lr,
+                                                wandb.config.noise_prior_scale))
     model = models.spectralGP_model.SpectralMixtureGPModel(X_train, y_train, likelihood,
-                                                           config["parameters"]["mixtures"],
-                                                           config["parameters"]['num_dims'])
+                                                           wandb.config.mixtures,
+                                                           wandb.config.num_dims)
 
-    optimizer = torch.optim.Adam(model.parameters(), lr=config["parameters"]["lr"])
+    optimizer = torch.optim.Adam(model.parameters(), lr=config.lr)
     wandb.watch(model, log="all")
     train_model(likelihood, model, optimizer, config, X_train, y_train,
-                learning_rate=config["parameters"]["lr"])
+                learning_rate=config.lr)
 
-    model_save_path = config["model_checkpoint_folder"] + "/spectral_model_training_size_" + str(config["train_size"]) + "_model_checkpoint.pt"
+    model_save_path = wandb.config.model_checkpoint_folder + "/spectral_model_training_size_" + str(wandb.config.train_size) + "_model_checkpoint.pt"
     torch.save(model.state_dict(), model_save_path)
     wandb.save(model.state.dict())
     wandb.save(model_save_path)
@@ -77,24 +77,11 @@ def main_sweep():
 
 if __name__ == '__main__':
 
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--cfg", help="specify path to configuration file (yaml) " ,type=str,default = "cfg/slurm_config.yaml")
-    parser.add_argument("--sweep", help="specify path to sweep configuration file (yaml) " ,type=str,default = "cfg/sweep_config.yaml")
-    args = parser.parse_args()
-
-    #loading in yaml files
-    with open(args.cfg, "r") as f:
-        config = yaml.load(f, Loader=yaml.FullLoader)
-
-    if config["sweep"]:
-        with open(args.sweep, "r") as f:
-            sweep_config = yaml.load(f, Loader=yaml.FullLoader)
-
     #logging into wandb
     wandb.login()
 
     #loading data
     dfsubset, X_train, y_train, X_test, y_test = load_test_train()
-    plot_train_test_data(dfsubset, X_train, y_train, X_test, y_test, config)
+    plot_train_test_data(dfsubset, X_train, y_train, X_test, y_test)
     # # saving model checkpoint
     main_sweep()
