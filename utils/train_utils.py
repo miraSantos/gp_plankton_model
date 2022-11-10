@@ -56,11 +56,10 @@ def define_training_data(X, y, train_size, normalize=True):
     return X_train, y_train, X_test, y_test
 
 
-def train_model(likelihood, model, optimizer,x_train, y_train,learning_rate=0.1):
+def train_model(likelihood, model, optimizer,x_train, y_train):
     """
     :param likelihood:
     :param model:
-    :param learning_rate:
     :return:
     """
     model.train()

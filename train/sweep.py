@@ -55,8 +55,7 @@ def main_sweep():
 
     optimizer = torch.optim.Adam(model.parameters(), lr=wandb.config.lr)
     wandb.watch(model, log="all")
-    train_model(likelihood, model, optimizer, config, X_train, y_train,
-                learning_rate=wandb.config.lr)
+    train_model(likelihood, model, optimizer, config, X_train, y_train)
 
     model_save_path = config["model_checkpoint_folder"] + "/spectral_model_training_size_" + str(wandb.config.train_size) + "_model_checkpoint.pt"
     torch.save(model.state_dict(), model_save_path)
