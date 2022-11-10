@@ -138,10 +138,9 @@ if __name__ == '__main__':
     with open(args.cfg, "r") as f:
         config = yaml.load(f, Loader=yaml.FullLoader)
 
-    run = wandb.init(mode=config["wandb_mode"])
-
-    #logging into wandb
     wandb.login()
+
+    run = wandb.init(mode=config["wandb_mode"])
 
     #loading data
     dfsubset, X_train, y_train, X_test, y_test = load_test_train()
