@@ -40,5 +40,6 @@ command:
   - ${env}
   - ${interpreter}
   - ${program}
-
+  - "--cfg"
+  - "cfg/slurm_config.yaml"
 
