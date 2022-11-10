@@ -16,7 +16,10 @@ if __name__ == '__main__':
         config = yaml.load(f, Loader=yaml.FullLoader)
 
     wandb.login()
-    wandb.init(project="testing",config=config,mode=config["wandb_mode"])
+    wandb.init(project="testing", config=config, mode=config["wandb_mode"])
+
+    wandb.config.train_size = config["parameters"]["train_size"]
+    wandb.config.train_iter = config["parameters"]["train_iter"]
 
     df = pd.read_csv(config["data_path"], low_memory=False)
     df.loc[:,'date'] = pd.to_datetime(df.loc[:,'date'], format="%Y-%m-%d") #required or else dates start at 1971! (WEIRD BUG HERE)
@@ -54,8 +57,7 @@ if __name__ == '__main__':
     wandb.watch(model, log="all")
 
     optimizer = torch.optim.Adam(model.parameters(), lr=config["parameters"]["lr"])
-    train_model(likelihood, model, optimizer, config, X_train, y_train,
-                learning_rate=config["parameters"]["lr"])
+    train_model(likelihood, model, optimizer, X_train, y_train)
 
     # # saving model checkpoint
     model_save_path = config["model_checkpoint_folder"] + "/temperature_spectral_model_training_size_" + str(config["parameters"]["train_size"]) + "_model_checkpoint.pt"

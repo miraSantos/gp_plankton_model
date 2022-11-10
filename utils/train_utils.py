@@ -130,4 +130,3 @@ def plot_train_test_data(df,x_train, y_train, x_test, y_test,config):
     fig.savefig(train_test_img)
     wandb.save(train_test_img)
     wandb.log({"Pre-Training Split": train_test_img})
-
