@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=array_sweep_gp_model    # Job name
+#SBATCH --job-name=db_array_sweep_gp_model    # Job name
 #SBATCH --mail-type=ALL          # Mail events (NONE, BEGIN, END, FAIL, ALL)
 #SBATCH --mail-user=msantos@whoi.edu     # Where to send mail
 #SBATCH --ntasks=1
@@ -21,7 +21,7 @@ wandb sweep --project syn_model_sweep cfg/sweep_db_config.yaml 2> temp.file
 
 cat temp.file
 
-for i in {1}; do
+for i in {1..5}; do
   eval "$(awk 'NR==4 {print $6, $7, $8}' temp.file)" &
   done
 wait
