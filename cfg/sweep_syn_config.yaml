@@ -26,31 +26,8 @@ parameters:
     value: 0.0
   noise_prior_scale:
     value:  0.01
-  model:
-    value: "spectralGP_model"
-  data_path:
-    value: "datasets/df_merged_daily_phyto_2022-10-21.csv"
-  res_path:
-    value: "results/"
-  model_checkpoint_folder:
-    value: "models/model_checkpoints"
-  model_checkpoint_file:
-    value: "models/model_checkpoints/training_size_0.1_model_checkpoint.pt"
-  predictor:
-    value: "daily_index"
-  dependent:
-    value: "synconc"
-
-  split_folder: "datasets/split/"
-
-  take_log:
-    desc: "option to take log of of dependent variable"
-    value: true
-
-  wandb_mode: null
-  sweep: true
-
-
+  num_dims_predictor:
+    value: 2
 
   optimizer:
     values: ["adam", "sgd"]

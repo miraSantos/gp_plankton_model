@@ -108,17 +108,17 @@ def plot_train_test_data(df,x_train, y_train, x_test, y_test,config):
     ax.scatter(df.date[:len(x_train)], y_train, color="blue", label="training data")
     ax.scatter(df.date[len(x_train):], y_test, color="red", label="testing data")
     # ax.axvline(x=df.date[len(x_train)], color="red", label="train_test_splot")
-    ax.set_title("Dependent: "+ wandb.config.dependent + " Predictor: "+ wandb.config.predictor + " " +
+    ax.set_title("Dependent: "+ config["dependent"] + " Predictor: "+ config["predictor"] + " " +
                  str(wandb.config.train_size * 100) + "% of data")
     ax.set_xlabel("Year")
-    ax.set_ylabel(wandb.config.dependent)
+    ax.set_ylabel(config["dependent"])
     ax.xaxis.set_major_locator(mdates.YearLocator())
     ax.xaxis.set_major_formatter(mdates.DateFormatter("%Y"))
     ax.grid()
     plt.show()
 
     # saving image
-    train_test_img = wandb.config.res_path + "/" + wandb.config.dependent + "/" + 'train_test_split_train_size_' + str(
+    train_test_img = config["res_path"] + "/" + config["dependent"] + "/" + 'train_test_split_train_size_' + str(
         wandb.config.train_size) + '.png'
     fig.savefig(train_test_img)
     wandb.save(train_test_img)
