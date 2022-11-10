@@ -4,7 +4,7 @@
 #SBATCH --mail-user=msantos@whoi.edu     # Where to send mail
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=8
-#SBATCH --mem=100GB                     # Job memory request
+#SBATCH --mem=180GB                     # Job memory request
 #SBATCH --time=10:00:00               # Time limit hrs:min:sec
 #SBATCH --output=/vortexfs1/scratch/msantos/gp_plankton_model/slurm_scripts/sweep/logs/syn_array_sweep.log   # Standard output and error log
 pwd; hostname; date
