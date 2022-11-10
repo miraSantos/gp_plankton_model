@@ -26,6 +26,23 @@ parameters:
     value: 0.0
   noise_prior_scale:
     value:  0.01
+  model: "spectralGP_model"
+  data_path: "datasets/df_merged_daily_phyto_2022-10-21.csv"
+  res_path: "results/"
+  model_checkpoint_folder: "models/model_checkpoints"
+  model_checkpoint_file: "models/model_checkpoints/training_size_0.1_model_checkpoint.pt"
+  predictor: "daily_index"
+  dependent: "synconc"
+
+  split_folder: "datasets/split/"
+
+  take_log:
+    desc: "option to take log of of dependent variable"
+    value: true
+
+  wandb_mode: null
+  sweep: true
+
 
 
   optimizer:
@@ -40,20 +57,4 @@ command:
   - ${interpreter}
   - ${program}
 
-model: "spectralGP_model"
-data_path: "datasets/df_merged_daily_phyto_2022-10-21.csv"
-res_path: "results/"
-model_checkpoint_folder: "models/model_checkpoints"
-model_checkpoint_file: "models/model_checkpoints/training_size_0.1_model_checkpoint.pt"
-predictor: "daily_index"
-dependent: "synconc"
-
-split_folder: "datasets/split/"
-
-take_log:
-  desc: "option to take log of of dependent variable"
-  value: true
-
-wandb_mode: null
-sweep: true
 
