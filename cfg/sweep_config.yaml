@@ -28,7 +28,6 @@ parameters:
     value:  0.01
   num_dims_predictor:
     value: 2
-
   optimizer:
     values: ["adam", "sgd"]
 
@@ -41,5 +40,5 @@ command:
   - ${interpreter}
   - ${program}
   - "--cfg"
-  - "cfg/slurm_config.yaml"
+  - "cfg/slurm_syn_config.yaml"
 
