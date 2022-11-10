@@ -92,6 +92,6 @@ if __name__ == '__main__':
 
     #loading data
     dfsubset, X_train, y_train, X_test, y_test = load_test_train()
-    plot_train_test_data(dfsubset, X_train, y_train, X_test, y_test)
+    plot_train_test_data(dfsubset, X_train, y_train, X_test, y_test, config)
     # # saving model checkpoint
     main_sweep()
