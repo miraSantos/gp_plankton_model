@@ -74,7 +74,7 @@ def main_sweep():
         'mean_dir_acc': mda(actual, predicted)
     })
 
-if __name__ == '__main__'
+if __name__ == '__main__':
     
     parser = argparse.ArgumentParser()
     parser.add_argument("--cfg", help="specify path to configuration file (yaml) ", type=str,
