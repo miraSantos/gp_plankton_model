@@ -117,6 +117,14 @@ def plot_train_test_data(df,x_train, y_train, x_test, y_test,config):
     plt.show()
 
     # saving image
+    results_folder = config["res_path"] + "/" + config["dependent"] + "/"
+    # Check whether the specified path exists or not
+    isExist = os.path.exists(results_folder)
+    if not isExist:
+        # Create a new directory because it does not exist
+        os.makedirs(results_folder)
+        print("The new directory is created!")
+
     train_test_img = config["res_path"] + "/" + config["dependent"] + "/" + 'train_test_split_train_size_' + str(
         wandb.config.train_size) + '.png'
     fig.savefig(train_test_img)
