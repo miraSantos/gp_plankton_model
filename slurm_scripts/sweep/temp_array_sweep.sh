@@ -17,7 +17,7 @@ echo "training model_spectral"
 
 cd /vortexfs1/scratch/msantos/gp_plankton_model
 
-wandb sweep --project syn_model_sweep cfg/sweep_temp_config.yaml 2> temp.file
+wandb sweep --project gp_sweeps cfg/sweep_temp_config.yaml 2> temp.file
 
 cat temp.file
 
