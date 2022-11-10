@@ -8,7 +8,7 @@ from utils.eval import *
 def load_test_train():
     df = pd.read_csv(config["data_path"], low_memory=False)
     df.loc[:,'date'] = pd.to_datetime(df.loc[:,'date'], format="%Y-%m-%d") #required or else dates start at 1971! (WEIRD BUG HERE)
-    dfsubset = df.dropna(subset=config["dependent"]) #dropping na values #TODO: fix spectral model so that it can handle missing observations
+    dfsubset = df.dropna(subset=[config["dependent"], config["predictor"]]) #dropping na values #TODO: fix spectral model so that it can handle missing observations
 
     print(int(config["num_dims_predictor"]))
     if int(config["num_dims_predictor"]) > 1:

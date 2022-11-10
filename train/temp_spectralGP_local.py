@@ -25,7 +25,7 @@ if __name__ == '__main__':
     df.loc[:,'date'] = pd.to_datetime(df.loc[:,'date'], format="%Y-%m-%d") #required or else dates start at 1971! (WEIRD BUG HERE)
     dfsubset = df.dropna(subset=[config["dependent"], config["predictor"]]) #dropping na values #TODO: fix spectral model so that it can handle missing observations
     X = torch.tensor(dfsubset.loc[:,config["predictor"]].reset_index().to_numpy(), dtype=torch.float32) #2D tensor
-    if config["take_log"]==True:
+    if config["take_log"]:
         dependent = np.log(dfsubset[config["dependent"]].values)
     else:
         dependent = dfsubset[config["dependent"]].values
