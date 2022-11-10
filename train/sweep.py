@@ -4,6 +4,7 @@ sys.path.append(os.getcwd())
 from utils.train_utils import *
 import wandb  # library for tracking and visualization
 from utils.eval import *
+from evaluation.forecasting_metrics import *
 
 
 def plot_inference(df,X_test, y_test, X_train, y_train):
@@ -44,9 +45,11 @@ def plot_inference(df,X_test, y_test, X_train, y_train):
     ax[1].set_xlabel("Day of the Year")
     ax[1].set_ylabel("Syn Conc")
     ax[1].legend()
-    eval_img = config["res_path"] +"/eval_train_size_" + str(config["parameters"]["train_size"]) + '.png'
+    eval_img = config["res_path"] + "/" + config["dependent"]+"/eval_train_size_" + str(config["parameters"]["train_size"]) + '.png'
     fig.savefig(eval_img)
+    wandb.save(eval_img)
     im = Image.open(eval_img)
+
     wandb.log({"Evaluation": wandb.Image(im)})
 
 
