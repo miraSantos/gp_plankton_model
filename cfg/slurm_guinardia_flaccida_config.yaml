@@ -4,7 +4,7 @@ res_path: "results/"
 model_checkpoint_folder: "models/model_checkpoints"
 model_checkpoint_file: "models/model_checkpoints/training_size_0.1_model_checkpoint.pt"
 predictor: "daily_index"
-dependent: "synconc"
+dependent: "Guinardia_flaccida"
 
 num_dims_predictor: 1
 split_folder: "datasets/split/"

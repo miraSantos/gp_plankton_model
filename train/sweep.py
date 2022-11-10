@@ -11,7 +11,7 @@ def load_test_train():
     dfsubset = df.dropna(subset=config["dependent"]) #dropping na values #TODO: fix spectral model so that it can handle missing observations
 
     print(int(config["num_dims_predictor"]))
-    if int(config["num_dims_predictor"]) >= 1:
+    if int(config["num_dims_predictor"]) > 1:
         X = torch.tensor(dfsubset.loc[:, config["predictor"]].reset_index().to_numpy(),
                          dtype=torch.float32)  # 2D tensor
     else:
