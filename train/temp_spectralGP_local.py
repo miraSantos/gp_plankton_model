@@ -63,3 +63,4 @@ if __name__ == '__main__':
     model_save_path = config["model_checkpoint_folder"] + "/temperature_spectral_model_training_size_" + str(config["parameters"]["train_size"]) + "_model_checkpoint.pt"
     torch.save(model.state_dict(), model_save_path)
     wandb.save(model_save_path)
+

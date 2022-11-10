@@ -92,7 +92,7 @@ if __name__ == '__main__':
     likelihood = gpytorch.likelihoods.GaussianLikelihoodWithMissingObs(noise_prior=gpytorch.priors.NormalPrior(config["parameters"]["noise_prior_loc"], config["parameters"]["noise_prior_scale"]))
     model = models.spectralGP_model.SpectralMixtureGPModel(X_train, y_train, likelihood, config["parameters"]["mixtures"], config["parameters"]['num_dims'])
 
-    model_save_path = config["model_checkpoint_folder"] + "/spectral_model_training_size_" + str(config["parameters"]["train_size"]) + "_model_checkpoint.pt"
+    model_save_path = config["model_checkpoint_folder"] + "/temperature_spectral_model_training_size_" + str(config["parameters"]["train_size"]) + "_model_checkpoint.pt"
 
     model.load_state_dict(torch.load( model_save_path))
 
