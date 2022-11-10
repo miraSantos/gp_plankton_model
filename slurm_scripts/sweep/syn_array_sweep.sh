@@ -13,7 +13,7 @@ eval "$(conda shell.bash hook)"
 
 conda activate gpytorch
 
-echo "training model_spectral"a
+echo "training model_spectral"
 
 cd /vortexfs1/scratch/msantos/gp_plankton_model
 
