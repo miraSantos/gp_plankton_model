@@ -3,7 +3,9 @@ data_path: "datasets/df_merged_daily_phyto_2022-10-21.csv"
 res_path: "results/"
 model_checkpoint_folder: "models/model_checkpoints"
 model_checkpoint_file: "models/model_checkpoints/training_size_0.1_model_checkpoint.pt"
-predictor: "daily_index"
+predictor: "Beam_temperature_corrected"
+num_dims_predictor:
+  value: 2
 dependent: "synconc"
 
 split_folder: "datasets/split/"

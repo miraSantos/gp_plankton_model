@@ -10,7 +10,7 @@ def load_test_train():
     df.loc[:,'date'] = pd.to_datetime(df.loc[:,'date'], format="%Y-%m-%d") #required or else dates start at 1971! (WEIRD BUG HERE)
     dfsubset = df.dropna(subset=config["dependent"]) #dropping na values #TODO: fix spectral model so that it can handle missing observations
 
-    if wandb.config.num_dims_predictor >= 1:
+    if config["num_dims_predictor"] >= 1:
         X = torch.tensor(dfsubset.loc[:, config["predictor"]].reset_index().to_numpy(),
                          dtype=torch.float32)  # 2D tensor
     else:
@@ -83,7 +83,7 @@ if __name__ == '__main__':
     with open(args.cfg, "r") as f:
         config = yaml.load(f, Loader=yaml.FullLoader)
 
-    run = wandb.init(project="testing", mode=config["wandb_mode"])
+    run = wandb.init(mode=config["wandb_mode"])
 
 
     #logging into wandb

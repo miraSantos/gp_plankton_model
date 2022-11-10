@@ -26,8 +26,6 @@ parameters:
     value: 0.0
   noise_prior_scale:
     value:  0.01
-  num_dims_predictor:
-    value: 2
   optimizer:
     values: ["adam", "sgd"]
 
