@@ -16,7 +16,7 @@ conda activate gpytorch
 
 cd /vortexfs1/scratch/msantos/gp_plankton_model
 
-wandb sweep --project gp_sweeps cfg/sweep_gs_config.yaml 2> temp.file
+wandb sweep --project gp_sweep cfg/sweep_gs_config.yaml 2> temp.file
 
 cat temp.file
 
