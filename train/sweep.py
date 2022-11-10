@@ -90,7 +90,6 @@ if __name__ == '__main__':
 
     run = wandb.init(mode=config["wandb_mode"])
 
-
     #logging into wandb
     wandb.login()
 
