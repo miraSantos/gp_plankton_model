@@ -17,6 +17,8 @@ cd /vortexfs1/scratch/msantos/gp_plankton_model
 
 wandb sweep --project syn_model_sweep cfg/sweep_config.yaml 2> temp.file
 
+cat temp.file
+
 for i in {1..5}; do
   eval "$(awk 'NR==4 {print $6, $7, $8}' temp.file)" &
   done
