@@ -107,10 +107,15 @@ def main_sweep():
     wandb.watch(model, log="all")
     train_model(likelihood, model, optimizer, X_train, y_train)
 
+    print("training finished")
+
     model_save_path = config["model_checkpoint_folder"] + "/spectral_model_training_size_" + str(wandb.config.train_size) + "_model_checkpoint.pt"
     torch.save(model.state_dict(), model_save_path)
     wandb.save(model.state.dict())
     wandb.save(model_save_path)
+
+    model.eval()
+
     observed_pred = likelihood(model(torch.tensor(dfsubset.index, dtype=torch.float32)))
     actual = y_test.numpy()
     predicted = observed_pred[len(X_train):].mean.detach().numpy()
