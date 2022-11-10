@@ -10,3 +10,5 @@ evaluate/__pycache__/*
 results/*
 models/__pycache__/*
 models/*.pyc
+utils/*.pyc
+utlis/__pycache__/*pyc
