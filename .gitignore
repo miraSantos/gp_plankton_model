@@ -9,3 +9,4 @@ evaluate/__pycache__/*
 */__pycache__/*
 results/*
 models/__pycache__/*
+models/*.pyc
