@@ -37,6 +37,11 @@ def load_test_train():
     wandb.config.X_test_shape = X_test.shape
     wandb.config.y_test_shape = y_test.shape
 
+    print("X_train shape: ", X_train.shape)
+    print("y_train shape: ", y_train.shape)
+    print("X_test shape: ", X_test.shape)
+    print("y_test shape: ", y_test.shape)
+
     return dfsubset, X_train, y_train, X_test, y_test
 
 def main_sweep():

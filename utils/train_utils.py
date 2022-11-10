@@ -49,7 +49,7 @@ def define_training_data(X, y, train_size, normalize=True):
     # X = X.reshape(len(X))
 
     if normalize:
-        # X = normalize_tensor(X)
+        X = normalize_tensor(X)
         y = normalize_tensor(y)
 
     X_train, y_train, X_test, y_test = train_test_split(X, y, train_size)
