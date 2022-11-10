@@ -75,16 +75,16 @@ def main_sweep():
     })
 
 if __name__ == '__main__':
-    
     parser = argparse.ArgumentParser()
     parser.add_argument("--cfg", help="specify path to configuration file (yaml) ", type=str,
                         default="cfg/local_config.yaml")
     args = parser.parse_args()
 
-    run = wandb.init(project="testing", mode=config["wandb_mode"])
-
     with open(args.cfg, "r") as f:
         config = yaml.load(f, Loader=yaml.FullLoader)
+
+    run = wandb.init(project="testing", mode=config["wandb_mode"])
+
 
     #logging into wandb
     wandb.login()
