@@ -8,5 +8,5 @@ dependent: "Ditylum_brightwellii"
 
 num_dims_predictor: 1
 split_folder: "datasets/split/"
-take_log: true
+take_log: false
 wandb_mode: null
