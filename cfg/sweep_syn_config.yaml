@@ -4,6 +4,42 @@ metric:
   name: mean_dir_acc
   goal: maximize
 
+parameters:
+  lr:
+    min: 0.0001
+    max: 0.1
+  mixtures:
+    min: 50
+    max: 1000
+  train_size:
+    min: 1
+    max: 8
+  train_iter: 
+    value: 2000
+  better_lower_bound:
+    value: 0.00001
+  num_dims:
+    value: 1
+  noise_value:
+    value: 0.01
+  noise_prior_loc: 
+    value: 0.0
+  noise_prior_scale:
+    value:  0.01
+
+
+  optimizer:
+    values: ["adam", "sgd"]
+
+early_terminate:
+  type: hyperband
+  min_iter: 2
+
+command:
+  - ${env}
+  - ${interpreter}
+  - ${program}
+
 model: "spectralGP_model"
 data_path: "datasets/df_merged_daily_phyto_2022-10-21.csv"
 res_path: "results/"
@@ -21,43 +57,3 @@ take_log:
 wandb_mode: null
 sweep: true
 
-parameters:
-  train_iter: 2000
-  train_size: 0.5
-  lr: 0.1
-  better_lower_bound: 0.00001
-  mixtures: 200
-  num_dims: 1
-  noise_value: 0.01
-  noise_prior_loc: 0.0
-  noise_prior_scale: 0.01
-
-parameters:
-  lr:
-    min: 0.0001
-    max: 0.1
-  mixtures:
-    min: 50
-    max: 1000
-  train_size:
-    min: 1
-    max: 8
-  train_iter: 2000
-  better_lower_bound: 0.00001
-  num_dims: 1
-  noise_value: 0.01
-  noise_prior_loc: 0.0
-  noise_prior_scale: 0.01
-
-
-  optimizer:
-    values: ["adam", "sgd"]
-
-early_terminate:
-  type: hyperband
-  min_iter: 2
-
-command:
-  - ${env}
-  - ${interpreter}
-  - ${program}
