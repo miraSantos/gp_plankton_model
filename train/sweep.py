@@ -5,6 +5,52 @@ from utils.train_utils import *
 import wandb  # library for tracking and visualization
 from utils.eval import *
 
+
+def plot_inference(df,X_test, y_test, X_train, y_train):
+    """
+    :param x_test:
+    :param likelihood:
+    :param model:
+    :return:
+    """
+    # Initialize plot
+
+    df.loc[:,'date'] = pd.to_datetime(df.loc[:,'date'], format="%Y-%m-%d")
+    width = 20
+    height = 5
+    fig, ax = plt.subplots(1, 2, figsize=(width, height))
+    # Get upper and lower confidence bounds
+    lower, upper = observed_pred.confidence_region()
+    # Plot training preprocess as black stars
+    ax[0].plot(df.date[:len(X_train)], y_train, 'k*', label="training data")
+    # Plot predictive means as blue line
+    ax[0].plot(df.date, observed_pred.mean.detach().numpy(), 'b', label="prediction")
+    #plot testing data
+    ax[0].plot(df.date[len(X_train):], y_test, 'g', label="testing data")
+    # Shade between the lower and upper confidence bounds
+    ax[0].fill_between(df.date, lower.detach().numpy(), upper.detach().numpy(), alpha=0.5)
+    ax[0].xaxis.set_major_locator(mdates.YearLocator())
+    ax[0].xaxis.set_major_formatter(mdates.DateFormatter("%Y"))
+    ax[0].set_xlabel("Year")
+    ax[0].set_ylabel("Syn Concentration")
+    ax[0].legend()
+    ax[0].grid()
+    ax[0].set_title("Evaluation " + "Training Size " + str(config["parameters"]["train_size"]*100) + "% of data")
+
+
+    #plotting with DOY on the x-axis
+    ax[1].scatter(df.doy_numeric[len(X_train):], y_test, label="observations",c = "green")
+    ax[1].scatter(df.doy_numeric[len(X_train):], observed_pred.mean.detach().numpy()[len(X_train):],label = "prediction",c = "blue")
+    ax[1].set_xlabel("Day of the Year")
+    ax[1].set_ylabel("Syn Conc")
+    ax[1].legend()
+    eval_img = config["res_path"] +"/eval_train_size_" + str(config["parameters"]["train_size"]) + '.png'
+    fig.savefig(eval_img)
+    im = Image.open(eval_img)
+    wandb.log({"Evaluation": wandb.Image(im)})
+
+
+
 def load_test_train():
     df = pd.read_csv(config["data_path"], low_memory=False)
     df.loc[:,'date'] = pd.to_datetime(df.loc[:,'date'], format="%Y-%m-%d") #required or else dates start at 1971! (WEIRD BUG HERE)
@@ -70,7 +116,7 @@ def main_sweep():
 
     metrics = [me, rae, mape, rmse,mda] #list of metrics to compute see forecasting_metrics.p
     result = compute_metrics(metrics,actual,predicted)
-    wandb.log({"result":result})
+    wandb.log({"result" : result})
 
     wandb.log({
         'mean_error': me(actual, predicted),
