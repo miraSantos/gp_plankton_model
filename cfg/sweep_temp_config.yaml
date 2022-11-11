@@ -1,4 +1,5 @@
 program: train/sweep.py
+name: "Sweeping Temperature, Syn"
 method: bayes
 metric:
   name: mean_dir_acc
