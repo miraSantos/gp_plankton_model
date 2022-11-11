@@ -10,10 +10,6 @@ dependent: "synconc"
 res_path: "results/"
 
 
-2D:
-  desc: "whether to use 2 dimensions or not in x variable"
-  val: true
-
 split_folder: "datasets/split/"
 
 take_log:
@@ -23,13 +19,4 @@ take_log:
 wandb_mode: null
 sweep: true
 
-parameters:
-  train_iter: 1000
-  train_size: 0.2
-  lr: 0.1
-  better_lower_bound: 0.00001
-  mixtures: 300
-  num_dims: 2
-  noise_value: 0.01
-  noise_prior_loc: 0.0
-  noise_prior_scale: 0.01
+

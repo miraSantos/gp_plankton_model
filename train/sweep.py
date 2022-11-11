@@ -7,7 +7,7 @@ from utils.eval import *
 from evaluation.forecasting_metrics import *
 
 
-def plot_inference(df,X_test, y_test, X_train, y_train):
+def plot_inference(df,X_test, y_test, X_train, y_train,observed_pred):
     """
     :param x_test:
     :param likelihood:
@@ -36,7 +36,7 @@ def plot_inference(df,X_test, y_test, X_train, y_train):
     ax[0].set_ylabel("Syn Concentration")
     ax[0].legend()
     ax[0].grid()
-    ax[0].set_title("Evaluation " + "Training Size " + str(config["parameters"]["train_size"]*100) + "% of data")
+    ax[0].set_title("Evaluation " + "Training Size " + str(wandb.config.train_size*100) + "% of data")
 
 
     #plotting with DOY on the x-axis
@@ -45,7 +45,7 @@ def plot_inference(df,X_test, y_test, X_train, y_train):
     ax[1].set_xlabel("Day of the Year")
     ax[1].set_ylabel("Syn Conc")
     ax[1].legend()
-    eval_img = config["res_path"] + "/" + config["dependent"]+"/eval_train_size_" + str(config["parameters"]["train_size"]) + '.png'
+    eval_img = config["res_path"] + "/" + config["dependent"]+"/eval_train_size_" + str(wandb.config.train_size) + '.png'
     fig.savefig(eval_img)
     wandb.save(eval_img)
     im = Image.open(eval_img)
@@ -59,13 +59,14 @@ def load_test_train():
     df.loc[:,'date'] = pd.to_datetime(df.loc[:,'date'], format="%Y-%m-%d") #required or else dates start at 1971! (WEIRD BUG HERE)
     dfsubset = df.dropna(subset=config["dependent"]) #dropping na values #TODO: fix spectral model so that it can handle missing observations
 
-    print(int(config["num_dims_predictor"]))
-    if int(config["num_dims_predictor"]) > 1:
+    if wandb.config.num_dims > 1:
         dfsubset = df.dropna(subset=[config["dependent"], config["predictor"]])  # dropping na values #TODO: fix spectral model so that it can handle missing observations
         X = torch.tensor(dfsubset.loc[:, config["predictor"]].reset_index().to_numpy(),
                          dtype=torch.float32)  # 2D tensor
-    else:
+    elif wandb.config.num_dims == 1:
         X = torch.tensor(dfsubset.index, dtype=torch.float32)
+    else:
+        assert value > 0 , f"number greater than 0 expected, got: {wandb.config.num_dims}"
 
     if config["take_log"]:
         dependent = np.log(dfsubset[config["dependent"]].values)
@@ -111,7 +112,6 @@ def main_sweep():
 
     model_save_path = config["model_checkpoint_folder"] + "/spectral_model_training_size_" + str(wandb.config.train_size) + "_model_checkpoint.pt"
     torch.save(model.state_dict(), model_save_path)
-    wandb.save(model.state.dict())
     wandb.save(model_save_path)
 
     model.eval()
@@ -120,7 +120,9 @@ def main_sweep():
     actual = y_test.numpy()
     predicted = observed_pred[len(X_train):].mean.detach().numpy()
 
-    plot_inference(dfsubset, X_test, y_test, X_train, y_train)
+    print(actual)
+    print(predicted)
+    plot_inference(dfsubset, X_test, y_test, X_train, y_train,observed_pred)
 
     metrics = [me, rae, mape, rmse,mda] #list of metrics to compute see forecasting_metrics.p
     result = compute_metrics(metrics,actual,predicted)
