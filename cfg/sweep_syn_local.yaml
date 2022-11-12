@@ -19,7 +19,7 @@ parameters:
   better_lower_bound:
     value: 0.00001
   num_dims:
-    value: 1
+    value: 2
   noise_value:
     value: 0.01
   noise_prior_loc:

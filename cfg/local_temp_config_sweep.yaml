@@ -9,7 +9,6 @@ dependent: "synconc"
 
 res_path: "results/"
 
-
 split_folder: "datasets/split/"
 
 take_log:

@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+source ~/anaconda3/etc/profile.d/conda.sh
 
 conda init
 conda activate gpytorch
