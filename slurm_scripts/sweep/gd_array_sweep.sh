@@ -5,7 +5,7 @@
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=8
 #SBATCH --mem=180GB                     # Job memory request
-#SBATCH --time=10:00:00               # Time limit hrs:min:sec
+#SBATCH --time=24:00:00               # Time limit hrs:min:sec
 #SBATCH --output=/vortexfs1/scratch/msantos/gp_plankton_model/slurm_scripts/sweep/logs/gd_array_sweep.log   # Standard output and error log
 pwd; hostname; date
 
@@ -17,9 +17,9 @@ echo "training model_spectral"
 
 cd /vortexfs1/scratch/msantos/gp_plankton_model
 
-wandb sweep --project gd_sweep cfg/sweep_gd_config.yaml 2> temp.file
+wandb sweep --project gd_sweep cfg/sweep_gd_config.yaml 2> gd_temp.file
 
-cat temp.file
+cat gd_temp.file
 
 for i in {1..5}; do
   eval "$(awk 'NR==4 {print $6, $7, $8}' temp.file)" &
