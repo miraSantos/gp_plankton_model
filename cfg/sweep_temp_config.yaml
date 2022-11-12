@@ -14,7 +14,7 @@ parameters:
     max: 1500
   train_size:
     min: 0.1
-    max: 0.5
+    max: 0.8
   train_iter:
     value: 200
   better_lower_bound:
