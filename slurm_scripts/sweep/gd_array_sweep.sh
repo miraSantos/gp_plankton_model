@@ -22,7 +22,7 @@ wandb sweep --project gp_sweep cfg/sweep_gd_config.yaml 2> gd_temp.file
 cat gd_temp.file
 
 for i in {1..5}; do
-  eval "$(awk 'NR==4 {print $6, $7, $8}' temp.file)" &
+  eval "$(awk 'NR==4 {print $6, $7, $8}' gd_temp.file)" &
   done
 wait
 echo "sweep finished"
