@@ -28,11 +28,8 @@ parameters:
   noise_prior_scale:
     value:  0.01
   optimizer:
-    values: ["adam", "sgd"]
+    value: "adam"
 
-early_terminate:
-  type: hyperband
-  min_iter: 2
 
 command:
   - ${env}

@@ -30,10 +30,6 @@ parameters:
   optimizer:
     values: ["adam", "sgd"]
 
-early_terminate:
-  type: hyperband
-  min_iter: 2
-
 command:
   - ${env}
   - ${interpreter}
