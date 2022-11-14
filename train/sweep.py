@@ -93,7 +93,7 @@ def load_test_train():
     print("X_test shape: ", X_test.shape)
     print("y_test shape: ", y_test.shape)
 
-    return dfsubset, X_train, y_train, X_test, y_test
+    return dfsubset, X, X_train, y_train, X_test, y_test
 
 def main_sweep():
 
@@ -116,7 +116,7 @@ def main_sweep():
 
     model.eval()
 
-    observed_pred = likelihood(model(torch.tensor(dfsubset.index, dtype=torch.float32)))
+    observed_pred = likelihood(model(torch.tensor(X, dtype=torch.float32)))
     actual = y_test.numpy()
     predicted = observed_pred[len(X_train):].mean.detach().numpy()
 
@@ -150,7 +150,7 @@ if __name__ == '__main__':
     run = wandb.init(mode=config["wandb_mode"])
 
     #loading data
-    dfsubset, X_train, y_train, X_test, y_test = load_test_train()
+    dfsubset, X, X_train, y_train, X_test, y_test = load_test_train()
     plot_train_test_data(dfsubset, X_train, y_train, X_test, y_test, config)
     # # saving model checkpoint
     main_sweep()
