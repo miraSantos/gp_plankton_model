@@ -2,8 +2,8 @@ program: train/sweep.py
 name: "Sweeping Syn"
 method: bayes
 metric:
-  name: mean_dir_acc
-  goal: maximize
+  name: rel_abs_error
+  goal: minimize
 
 parameters:
   lr:
@@ -28,7 +28,8 @@ parameters:
     value:  0.01
   optimizer:
     values: ["adam", "sgd"]
-
+  seasonality:
+    value: 365
 
 command:
   - ${env}
