@@ -133,7 +133,8 @@ def main_sweep():
         'rel_abs_error': rae(actual, predicted),
         'mean_avg_per_error': mape(actual, predicted),
         'rt_sq_mean_error': rmse(actual, predicted),
-        'mean_dir_acc': mda(actual, predicted)
+        'mean_dir_acc': mda(actual, predicted),
+        'mean_absolute_scaled_error': mase(actual, predicted, wandb.config.seasonality)
     })
 
 if __name__ == '__main__':
