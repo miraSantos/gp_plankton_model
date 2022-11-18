@@ -13,3 +13,4 @@ models/*.pyc
 utils/*.pyc
 utlis/__pycache__/*pyc
 models/model_checkpoints/*
+*temp.file
