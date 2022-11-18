@@ -45,7 +45,7 @@ def define_training_data(X, y, train_size, normalize=True):
     :return:
     """
 
-    y = y.reshape(len(y))
+    # y = y.reshape(len(y))
     # X = X.reshape(len(X))
 
     if normalize:
@@ -104,8 +104,8 @@ def plot_train_test_data(df,x_train, y_train, x_test, y_test,config):
     width = 20
     height = 5
     fig, ax = plt.subplots(figsize=(width, height))
-    ax.scatter(df.date[:len(x_train)], y_train, color="blue", label="training data")
-    ax.scatter(df.date[len(x_train):], y_test, color="red", label="testing data")
+    ax.scatter(df.date[:len(x_train)], y_train, c="blue", marker=".", label="training data")
+    ax.scatter(df.date[len(x_train):], y_test, c="red", marker="." , label="testing data")
     # ax.axvline(x=df.date[len(x_train)], color="red", label="train_test_splot")
     ax.set_title("Dependent: "+ config["dependent"] + " Predictor: "+ config["predictor"] + " " +
                  str(wandb.config.train_size * 100) + "% of data")
@@ -114,6 +114,7 @@ def plot_train_test_data(df,x_train, y_train, x_test, y_test,config):
     ax.xaxis.set_major_locator(mdates.YearLocator())
     ax.xaxis.set_major_formatter(mdates.DateFormatter("%Y"))
     ax.grid()
+    ax.legend()
     plt.show()
 
     # saving image
@@ -130,3 +131,4 @@ def plot_train_test_data(df,x_train, y_train, x_test, y_test,config):
     fig.savefig(train_test_img)
     wandb.save(train_test_img)
     wandb.log({"Pre-Training Split": train_test_img})
+    plt.close(fig)
