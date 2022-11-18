@@ -8,6 +8,7 @@ dependent: "Guinardia_striata"
 
 num_dims_predictor: 1
 split_folder: "datasets/split/"
-take_log: false
+take_log: true
 wandb_mode: null
+normalize: false
 
