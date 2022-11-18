@@ -5,13 +5,15 @@ from utils.train_utils import *
 import wandb  # library for tracking and visualization
 from utils.eval import *
 from evaluation.forecasting_metrics import *
+import torch
+import gpytorch
 
-
-def plot_inference(df,X_test, y_test, X_train, y_train,observed_pred):
+def plot_inference(df, y_test, X_train, y_train,observed_pred):
     """
-    :param x_test:
-    :param likelihood:
-    :param model:
+    :param y_test:
+    :param X_train:
+    :param y_train:
+    :param observed_pred:
     :return:
     """
     # Initialize plot
@@ -27,7 +29,7 @@ def plot_inference(df,X_test, y_test, X_train, y_train,observed_pred):
     # Plot predictive means as blue line
     ax[0].plot(df.date, observed_pred.mean.detach().numpy(), 'b', label="prediction")
     #plot testing data
-    ax[0].plot(df.date[len(X_train):], y_test, 'g', label="testing data")
+    ax[0].plot(df.date[len(X_train):], y_test, 'k-', label="testing data")
     # Shade between the lower and upper confidence bounds
     ax[0].fill_between(df.date, lower.detach().numpy(), upper.detach().numpy(), alpha=0.5)
     ax[0].xaxis.set_major_locator(mdates.YearLocator())
@@ -43,16 +45,15 @@ def plot_inference(df,X_test, y_test, X_train, y_train,observed_pred):
     ax[1].scatter(df.doy_numeric[len(X_train):], y_test, label="observations",c = "green")
     ax[1].scatter(df.doy_numeric[len(X_train):], observed_pred.mean.detach().numpy()[len(X_train):],label = "prediction",c = "blue")
     ax[1].set_xlabel("Day of the Year")
-    ax[1].set_ylabel("Syn Conc")
+    ax[1].set_ylabel(config["dependent"])
     ax[1].legend()
     eval_img = config["res_path"] + "/" + config["dependent"]+"/eval_train_size_" + str(wandb.config.train_size) + '.png'
     fig.savefig(eval_img)
     wandb.save(eval_img)
     im = Image.open(eval_img)
-
+    plt.show()
     wandb.log({"Evaluation": wandb.Image(im)})
-
-
+    plt.close()
 
 def load_test_train():
     df = pd.read_csv(config["data_path"], low_memory=False)
@@ -66,7 +67,7 @@ def load_test_train():
     elif wandb.config.num_dims == 1:
         X = torch.tensor(dfsubset.index, dtype=torch.float32)
     else:
-        assert value > 0 , f"number greater than 0 expected, got: {wandb.config.num_dims}"
+        assert wandb.config.num_dims > 0 , f"number greater than 0 expected, got: {wandb.config.num_dims}"
 
     if config["take_log"]:
         dependent = np.log(dfsubset[config["dependent"]].values)
@@ -75,7 +76,7 @@ def load_test_train():
     y = torch.tensor(dependent, dtype=torch.float32)
 
     # #defining training data based on testing split
-    X_train, y_train, X_test, y_test = define_training_data(X, y, train_size=wandb.config.train_size, normalize=True)
+    X_train, y_train, X_test, y_test = define_training_data(X, y, train_size=wandb.config.train_size, normalize=config["normalize"])
 
     torch.save(X, config["split_folder"] + config["dependent"] + "X_dataset.pt")
     torch.save(X_train, config["split_folder"] + config["dependent"] + "train_size_" + str(wandb.config.train_size) + "_X_train.pt")
@@ -95,10 +96,33 @@ def load_test_train():
 
     return dfsubset, X, X_train, y_train, X_test, y_test
 
+def train_model(likelihood, model, optimizer,x_train, y_train):
+    """
+    :param likelihood:
+    :param model:
+    :return:
+    """
+    model.train()
+    likelihood.train()
+    smoke_test = ('CI' in os.environ)
+    # Use the adam optimizer
+    # "Loss" for GPs - the marginal log likelihood
+    mll = gpytorch.mlls.ExactMarginalLogLikelihood(likelihood, model)
+
+    pbar = tqdm(range(wandb.config.train_iter))
+    for i in pbar:
+        optimizer.zero_grad()
+        output = model(x_train)
+        loss = -mll(output, y_train)
+        loss.backward()
+        pbar.set_description('Iter %d/%d - Loss: %.3f' % (i + 1, wandb.config.train_iter, loss.item()))
+        wandb.log({"Test loss": loss.item()})
+        optimizer.step()
+
 def main_sweep():
 
     likelihood = gpytorch.likelihoods.GaussianLikelihoodWithMissingObs(
-        noise_prior=gpytorch.priors.NormalPrior(wandb.config.lr,
+        noise_prior=gpytorch.priors.NormalPrior(wandb.config.noise_prior_loc,
                                                 wandb.config.noise_prior_scale))
     model = models.spectralGP_model.SpectralMixtureGPModel(X_train, y_train, likelihood,
                                                            wandb.config.mixtures,
@@ -106,6 +130,8 @@ def main_sweep():
 
     optimizer = torch.optim.Adam(model.parameters(), lr=wandb.config.lr)
     wandb.watch(model, log="all")
+
+    print("training started")
     train_model(likelihood, model, optimizer, X_train, y_train)
 
     print("training finished")
@@ -115,16 +141,18 @@ def main_sweep():
     wandb.save(model_save_path)
 
     model.eval()
+    likelihood.eval()
 
-    observed_pred = likelihood(model(torch.tensor(X, dtype=torch.float32)))
+    with torch.no_grad(), gpytorch.settings.fast_pred_var():
+        observed_pred = likelihood(model(X))
     actual = y_test.numpy()
     predicted = observed_pred[len(X_train):].mean.detach().numpy()
 
-    print(actual)
-    print(predicted)
-    plot_inference(dfsubset, X_test, y_test, X_train, y_train,observed_pred)
+    # print(actual)
+    # print(predicted)
+    plot_inference(dfsubset, y_test, X_train, y_train,observed_pred)
 
-    metrics = [me, rae, mape, rmse,mda] #list of metrics to compute see forecasting_metrics.p
+    metrics = [me, rae, mape, rmse,mda] #list of metrics to compute see forecasting_metrics.py
     result = compute_metrics(metrics,actual,predicted)
     wandb.log({"result" : result})
 

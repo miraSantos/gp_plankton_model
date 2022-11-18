@@ -13,6 +13,7 @@ from calendar import month_name as mn
 import datetime
 from matplotlib.dates import MonthLocator, DateFormatter
 import matplotlib.dates as mdates #for working with dates in plots
+from tqdm import tqdm
 
 
 
@@ -20,7 +21,7 @@ import matplotlib.dates as mdates #for working with dates in plots
 #Importing Data
 #############################
 
-PATH = "../data/dfmerged_dailysynenv.csv"
+PATH = "../datasets/df_merged_daily_phyto_2022-10-21.csv"
 df = pd.read_csv(PATH)#.drop_duplicates(subset = "date") #remove duplicate days
 
 
@@ -78,7 +79,7 @@ final_kernel
 gaussian_process = GaussianProcessRegressor(kernel = final_kernel, normalize_y = False)
 
 end = 1000
-for ee in range(3,end):     
+for ee in tqdm(range(3,end)):
     gaussian_process.fit(X[1:ee],y[1:ee]-y_mean)
 
 
@@ -109,6 +110,28 @@ for ee in range(3,end):
         "Daily Average of Syn Concentration"
     )
     
-    plt.savefig("/D/MIT-WHOI/github_repos/syn_model/results/gp_syn_plots/" + str(ee).zfill(3) + "gpsyn.jpg")
-    print(str(ee).zfill(3) + " of " + str(end))
+    plt.savefig("../results/sci_kit_learn_results/" + str(ee).zfill(3) + "gpsyn.jpg")
     plt.close()
+
+    plt.figure(figsize=(15, 8))
+    plt.scatter(df.date[1:ee], y[1:ee], color="black", marker="x", label="Measurements")
+    plt.plot(df.date[-len(X_test):],mean_y_pred, color="tab:blue", alpha=0.4, label="Gaussian process")
+    plt.fill_between(
+        X_test.ravel(),
+        mean_y_pred - std_y_pred,
+        mean_y_pred + std_y_pred,
+        color="tab:blue",
+        alpha=0.2,
+    )
+    plt.ylim([0, 13])
+    plt.legend()
+    plt.xlabel("Day of Year")
+    plt.ylabel("Log(Daily Average of Syn Concentration)")
+    _ = plt.title(
+        "Daily Average of Syn Concentration"
+    )
+
+    plt.savefig("../results/sci_kit_learn_results/" + str(ee).zfill(3) + "gpsyn_doy.jpg")
+    plt.close()
+
+
