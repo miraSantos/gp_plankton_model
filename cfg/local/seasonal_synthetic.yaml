@@ -1,0 +1,40 @@
+model: "seasonal_gp"
+
+data_path: "/home/mira/PycharmProjects/sklearn_plankton_model/datasets/synthetic/temp_no_variance_conc_10Dec2022.csv"
+split_folder: "datasets/split/"
+model_save_path: "models/model_checkpoints/seasonal/seasonal_synthetic_model_test.pt"
+res_path: "results/"
+sweep: false
+wandb_mode: "disabled" #alternative is null (which enables wandb)
+
+predictor: "date"
+dependent: "dependent"
+
+take_log: false #normalization
+normalize: false
+num_dims: 1
+train_size: 0.5
+lr: 0.1
+train_iter: 30
+noise_prior_loc: 0
+noise_prior_scale: 0.001
+
+#LONG TERM TREND KERNEL
+lt_t_prior: gpytorch.priors.NormalPrior(loc=0,scale=1)
+lt_l_constraint: gpytorch.constraints.Interval(-1,1)
+lt_eps: 0.000001
+
+#
+s_rbf_l_prior: gpytorch.priors.NormalPrior(loc=0,scale=1)
+s_rbf_l_constraint: gpytorch.constraints.Positive()
+s_rbf_eps: 0.
+s_pl_prior: gpytorch.priors.NormalPrior(loc=0,scale=1)
+s_pl_constraint: gpytorch.constraints.Positive()
+s_pk_l_prior: gpytorch.priors.NormalPrior(loc=0,scale=1)
+s_pk_l_constraint: gpytorch.constraints.Positive()
+s_pk_eps: 0.000001
+
+wn_l_prior: gpytorch.priors.NormalPrior(loc=0,scale=1)
+wn_l_constraint: gpytorch.constraints.Positive()
+wn_a_constraint: gpytorch.constraints.Positive()
+wn_eps: 0.000001

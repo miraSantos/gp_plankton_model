@@ -1,4 +1,5 @@
-model: "spectralGP_model"
+model_name: "spectralGP_model"
+
 data_path: "datasets/df_merged_daily_phyto_2022-10-21.csv"
 res_path: "results/"
 model_checkpoint_folder: "models/model_checkpoints"

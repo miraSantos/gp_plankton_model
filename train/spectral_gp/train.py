@@ -31,16 +31,6 @@ if __name__ == '__main__':
     # #defining training data based on testing split
     X_train, y_train, X_test, y_test = define_training_data(X, y, train_size=config["parameters"]["train_size"], normalize=True)
 
-    torch.save(X, config["split_folder"] + config["dependent"] + "X_dataset.pt")
-    torch.save(X_train, config["split_folder"] + config["dependent"] + "train_size_" + str(config["parameters"]["train_size"]) + "_X_train.pt")
-    torch.save(y_train, config["split_folder"] + config["dependent"] + "train_size_" + str(config["parameters"]["train_size"]) + "_y_train.pt")
-    torch.save(X_test, config["split_folder"] + config["dependent"] + "train_size_" + str(config["parameters"]["train_size"]) + "_X_test.pt")
-    torch.save(y_test, config["split_folder"] + config["dependent"] + "train_size_" + str(config["parameters"]["train_size"]) + "_y_test.pt")
-
-    config["X_train_shape"] = X_train.shape
-    config["y_train_shape"] = y_train.shape
-    config["X_test_shape"] = X_test.shape
-    config["y_test_shape"] = y_test.shape
 
     plot_train_test_data(dfsubset, X_train, y_train, X_test, y_test, config)
 

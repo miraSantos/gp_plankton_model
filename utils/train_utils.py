@@ -9,22 +9,19 @@ import matplotlib.dates as mdates  # v 3.3.2
 sys.path.append(os.getcwd())
 
 from tqdm import tqdm
-import yaml
-import models.spectralGP_model
 import matplotlib.pyplot as plt
-import argparse
 
-from matplotlib.dates import YearLocator
-from PIL import Image
 import wandb  # library for tracking and visualization
 from evaluation.forecasting_metrics import *
+
+wandb
 
 def train_test_split(X, y, train_size):
     """
     :param X:torch.tensor predictor variable
     :param y:torch.tensor dependent variable
-    :param train_size:
-    :return:
+    :param train_size:float32 size of training data expressed as decimal between 0 and 1.
+    :return X_train:
     """
     X_train = X[:math.ceil(train_size * len(X)), ]
     y_train = y[:math.ceil(train_size * len(y)), ]
@@ -75,21 +72,14 @@ def train_model(likelihood, model, optimizer,x_train, y_train):
         output = model(x_train)
         loss = -mll(output, y_train)
         loss.backward()
-        pbar.set_description('Iter %d/%d - Loss: %.3f' % (i + 1, wandb.config.train_iter, loss.item()))
-        wandb.log({"Test loss": loss.item()})
+        pbar.set_description('Iter %d/%d - Loss: %.3f  noise: %.3f' % (i + 1,
+                                                                 wandb.config.train_iter,
+                                                                       loss.item(),
+                                                                   model.likelihood.noise.item()
+                                                                                            ))
+        wandb.log({"Test loss": loss.item(),
+                    "Noise" : model.likelihood.noise.item()})
         optimizer.step()
-
-def compute_metrics(metrics, actual, predicted ):
-
-    metrics_list = [[] for _ in range(len(metrics))]  # list of lists to store error metric results
-
-    for j in range(len(metrics)):
-        metrics_list[j].append(metrics[j](actual,predicted))
-
-    df_metrics = pd.DataFrame({"metrics":metrics,"metrics_values":metrics_list})
-    wandb.log({"table":df_metrics})
-    return metrics_list
-
 
 def plot_train_test_data(df,x_train, y_train, x_test, y_test,config):
     # wandb.log({"train_test_data": wandb.plot.line_series(
@@ -132,3 +122,44 @@ def plot_train_test_data(df,x_train, y_train, x_test, y_test,config):
     wandb.save(train_test_img)
     wandb.log({"Pre-Training Split": train_test_img})
     plt.close(fig)
+
+def load_test_train(config):
+    df = pd.read_csv(config["data_path"], low_memory=False)
+    df.loc[:, 'date'] = pd.to_datetime(df.loc[:, 'date'],
+                                       format="%Y-%m-%d")  # required or else dates start at 1971! (WEIRD BUG HERE)
+    dfsubset = df.dropna(subset=config[
+        "dependent"])  # dropping na values #TODO: fix spectral model so that it can handle missing observations
+
+    if wandb.config.num_dims > 1:
+        dfsubset = df.dropna(subset=[config["dependent"], config[
+            "predictor"]])  # dropping na values #TODO: fix spectral model so that it can handle missing observations
+        X = torch.tensor(dfsubset.loc[:, config["predictor"]].reset_index().to_numpy(),
+                         dtype=torch.float32)  # 2D tensor
+    elif wandb.config.num_dims == 1:
+        X = torch.tensor(dfsubset.index, dtype=torch.float32)
+    else:
+        assert wandb.config.num_dims > 0, f"number greater than 0 expected, got: {wandb.config.num_dims}"
+
+    if config["take_log"]:
+        dependent = np.log(dfsubset[config["dependent"]].values)
+    else:
+        dependent = dfsubset[config["dependent"]].values
+    y = torch.tensor(dependent, dtype=torch.float32)
+
+    # #defining training data based on testing split
+    X_train, y_train, X_test, y_test = define_training_data(X, y, train_size=wandb.config.train_size,
+                                                            normalize=config["normalize"])
+
+    wandb.config.X_train_shape = X_train.shape
+    wandb.config.y_train_shape = y_train.shape
+    wandb.config.X_test_shape = X_test.shape
+    wandb.config.y_test_shape = y_test.shape
+
+    print("X_train shape: ", X_train.shape)
+    print("y_train shape: ", y_train.shape)
+    print("X_test shape: ", X_test.shape)
+    print("y_test shape: ", y_test.shape)
+
+    return dfsubset, X, X_train, y_train, X_test, y_test
+
+

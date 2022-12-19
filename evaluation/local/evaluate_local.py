@@ -4,13 +4,8 @@ import sys
 sys.path.append(os.getcwd())
 
 import gpytorch
-import matplotlib.dates as mdates  # v 3.3.2
-import matplotlib.pyplot as plt
-import pandas as pd
 import torch
-import wandb
 import yaml
-from PIL import Image
 from evaluation.forecasting_metrics import *
 from utils.eval import *
 
@@ -81,7 +76,7 @@ if __name__ == '__main__':
     df = pd.read_csv(config["data_path"], low_memory=False)
     df.loc[:, 'date'] = pd.to_datetime(df.loc[:, 'date'],
                                        format="%Y-%m-%d")  # required or else dates start at 1971! (WEIRD BUG HERE)
-    dfsubset = df.dropna(subset=[config["dependent"], config["predictor"]])  # dropping na values #TODO: fix spectral model so that it can handle missing observations
+    dfsubset = df.dropna(subset=[config["dependent"]])  # dropping na values #TODO: fix spectral model so that it can handle missing observations
 
     X = torch.load( config["split_folder"] + config["dependent"] + "X_dataset.pt")
     X_train = torch.load(config["split_folder"] + config["dependent"] + "train_size_" + str(config["parameters"]["train_size"]) + "_X_train.pt")

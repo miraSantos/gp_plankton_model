@@ -17,7 +17,6 @@ from evaluation.forecasting_metrics import *
 
 
 import models.spectralGP_model
-import argparse
 
 def plot_inference(df,X_test, y_test, X_train, y_train):
     """

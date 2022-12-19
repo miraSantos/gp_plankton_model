@@ -1,0 +1,33 @@
+model: "seasonal_gp"
+wandb_mode: "disabled"
+data_path: "/home/mira/PycharmProjects/sklearn_plankton_model/datasets/synthetic/temp_conc_10Dec2022.csv"
+num_dims: 1
+predictor: "date"
+dependent: "dependent"
+take_log: true
+
+model_save_path: "models/model_checkpoints/spectral_sync_model_15Dec2022.pt"
+
+train_size: 0.01
+res_path: "results/"
+
+split_folder: "datasets/split/"
+
+take_log: true
+
+noise_prior_loc: 0
+noise_prior_scale: 1
+
+sweep: false
+normalize: false
+lr: 0.1
+train_iter: 200
+mixtures: 100
+
+
+mixture_scales_prior: gpytorch.priors.MultivariateNormalPrior(1)
+mixture_means_prior: gpytorch.priors.MultivariateNormalPrior(1)
+mixture_weights_prior: gpytorch.priors.MultivariateNormalPrior(1)
+
+
+num_dims: 1
