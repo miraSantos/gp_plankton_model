@@ -1,20 +1,15 @@
-
+import os, sys, wandb
 import pandas as pd
-import os
-import sys
 import matplotlib.dates as mdates  # v 3.3.2
-
 sys.path.append(os.getcwd())
-
 import matplotlib.pyplot as plt
-
 from PIL import Image
-import wandb  # library for tracking and visualization
 from evaluation.forecasting_metrics import *
+import seaborn as sns
 
 
 
-def plot_evaluation(dfsubset,config,actual,predicted):
+def plot_evaluation(dfsubset,config,actual,predicted,observed_pred,y_train,X,y_test,X_train):
     # FULL TIMESERIES and DOY Plot
     lower, upper = observed_pred.confidence_region()
     print(type(observed_pred))
@@ -38,7 +33,7 @@ def plot_evaluation(dfsubset,config,actual,predicted):
                label="prediction",
                c="red")
     ax[0].fill_between(dfsubset.date[0:len(X)], lower.detach().numpy(), upper.detach().numpy(), alpha=0.2,color = "red")
-    ax[0].set_title("Seasonal Kernel forecast: " + str(config["dependent"]))
+    ax[0].set_title(config["model"]+" forecast: " + str(config["dependent"]))
     ax[0].set_ylabel(config["dependent"])
     ax[0].set_xlabel("Year")
     ax[0].legend()
@@ -58,7 +53,7 @@ def plot_evaluation(dfsubset,config,actual,predicted):
     fig.savefig(eval_img)
     wandb.save(eval_img)
     im = Image.open(eval_img)
-    wandb.log({"Full Timeseries Evaluation": wandb.Image(im)})
+    wandb.log({config["model"]+" Full Timeseries Evaluation": wandb.Image(im)})
 
     #
     # Actual vs. Predicted and Violin Plot
@@ -71,10 +66,10 @@ def plot_evaluation(dfsubset,config,actual,predicted):
     ax[0].legend()
     ax[0].set_ylabel(config["dependent"])
     ax[0].set_xlabel("Year")
-    ax[0].set_title("Observations vs. Predictions for Testing")
+    ax[0].set_title(config["model"]+ " Observations vs. Predictions for Testing")
     pal = {config["dependent"]: "mediumseagreen", "predictions": "r"}
     sns.violinplot(axes=ax[1], data=new_long, x="month", y="conc", hue="variable", split=True, palette=pal)
-    ax[1].legend(handles=ax.legend_.legendHandles, labels=["Observations", "Predictions"])
+    # ax[1].legend(handles=ax.legend_.legendHandles, labels=["Observations", "Predictions"])
     ax[1].set_title("Violin Plot of Predictive Check")
     ax[1].grid()
     plt.show()

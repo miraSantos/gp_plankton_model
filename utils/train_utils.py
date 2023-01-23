@@ -95,7 +95,7 @@ def plot_train_test_data(df,x_train, y_train, x_test, y_test,config):
     height = 5
     fig, ax = plt.subplots(figsize=(width, height))
     ax.scatter(df.date[:len(x_train)], y_train, c="blue", marker=".", label="training data")
-    ax.scatter(df.date[len(x_train):], y_test, c="red", marker="." , label="testing data")
+    ax.scatter(df.date[len(x_train):], y_test, c="mediumseagreen", marker="." , label="testing data")
     # ax.axvline(x=df.date[len(x_train)], color="red", label="train_test_splot")
     ax.set_title("Dependent: "+ config["dependent"] + " Predictor: "+ config["predictor"] + " " +
                  str(wandb.config.train_size * 100) + "% of data")

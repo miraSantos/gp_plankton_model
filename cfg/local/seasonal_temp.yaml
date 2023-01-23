@@ -1,11 +1,12 @@
 model: "seasonal_gp"
 
+project: "seasonal_gp"
 data_path: "/home/mira/PycharmProjects/prophet_plankton_model/datasets/df_merged_interpolated_2022Dec22.csv"
 split_folder: "datasets/split/"
-model_save_path: "models/model_checkpoints/seasonal/syn_seasonal_model_test.pt"
+model_save_path: "models/model_checkpoints/seasonal/syn_seasonal_temp_interpolated_model_test.pt"
 res_path: "results/"
 sweep: false
-wandb_mode: "disabled" #alternative is null (which enables wandb)
+wandb_mode: null #alternative is null (which enables wandb)
 
 predictor: "Beam_temperature_corrected_interpolated"
 dependent: "log_syn_interpolated"

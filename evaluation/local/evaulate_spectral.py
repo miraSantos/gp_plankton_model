@@ -68,27 +68,29 @@ if __name__ == '__main__':
 
     #generrate predictions
 
-    observed_pred = tqdm(likelihood(model(X)))
-    # dfsubset["predictions"] = observed_pred.mean.detach().numpy()
-    # dfsubset["month"] = dfsubset.date.dt.month
-    #
-    # actual = y_test.numpy()
-    # predicted = observed_pred[len(X_train):].mean.detach().numpy()
-    #
-    # plot_evaluation(dfsubset,config,actual,predicted)
-    #
-    # metrics = [me, rae, mape, rmse,mda] #list of metrics to compute see forecasting_metrics.p
-    # result = compute_metrics(metrics,actual,predicted)
-    # wandb.log({"result":result})
-    #
-    #
-    # print("mean error: "+ str(me(actual , predicted)))
-    # print("mean average percentage error: ", str(mape(actual,predicted)))
-    # print("relative absolute error: ", str(rae(actual,predicted)))
-    # print("mean directional accuracy: ", str(mda(actual,predicted)))
-    # # print("mean average scaled error" , str(mase(actual,predicted,seasonality=360)))
-    #
-    # plt.close()
-    # plt.close()
+    observed_pred = likelihood(model(torch.tensor(X, dtype=torch.float32)))
+    print(type(observed_pred))
+    dfsubset["predictions"] = observed_pred.mean.detach().numpy()
+    dfsubset["month"] = dfsubset.date.dt.month
+
+    actual = y_test.numpy()
+    predicted = observed_pred[len(X_train):].mean.detach().numpy()
+
+    plot_evaluation(dfsubset,config,actual,predicted,observed_pred,y_train,X,y_test,X_train)
+
+
+    metrics = [me, rae, mape, rmse,mda] #list of metrics to compute see forecasting_metrics.p
+    result = compute_metrics(metrics,actual,predicted)
+    wandb.log({"result":result})
+
+
+    print("mean error: "+ str(me(actual , predicted)))
+    print("mean average percentage error: ", str(mape(actual,predicted)))
+    print("relative absolute error: ", str(rae(actual,predicted)))
+    print("mean directional accuracy: ", str(mda(actual,predicted)))
+    # print("mean average scaled error" , str(mase(actual,predicted,seasonality=360)))
+
+    plt.close()
+    plt.close()
 
 

@@ -60,7 +60,7 @@ if __name__ == '__main__':
     save_path = "/dos/MIT-WHOI/data/2022/df_merged_daily_phyto_" +str(datetime.date.today()) + "_interpolated"
     dfd = create_daily_df(df)
     dfd = interpolate(dfd, "Beam_temperature_corrected")
-    dfd = interpolate(dfd, "log_syn")
+    dfd = interpolate(dfd, "synconc")
     dfd.reset_index(inplace=True)
     dfd = dfd.replace(r'^\s*$', np.nan, regex=True)
     dfd.to_pickle(save_path+".pkl")

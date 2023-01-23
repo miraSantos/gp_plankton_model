@@ -1,4 +1,6 @@
 import gpytorch
+import gpytorch.kernels
+import gpytorch.constraints
 
 # simplest form of GP model, exact inference
 class exactGP_model(gpytorch.models.ExactGP):
