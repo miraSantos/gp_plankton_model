@@ -16,17 +16,19 @@ if __name__ == '__main__':
         config = yaml.load(f, Loader=yaml.FullLoader)
 
     wandb.login()
-    wandb.init(project="seasonal_gp", config=config, mode=config["wandb_mode"])
+    wandb.init(project=config["project"], config=config, mode=config["wandb_mode"])
 
     df = pd.read_csv(config["data_path"], low_memory=False)
     df.loc[:,'date'] = pd.to_datetime(df.loc[:,'date'], format="%Y-%m-%d") #required or else dates start at 1971! (WEIRD BUG HERE)
     df.loc[:,"doy_numeric"] = df.date.dt.dayofyear
-    dfsubset = df.dropna(subset=config["dependent"]) #dropping na values #TODO: fix spectral model so that it can handle missing observations
+    dfsubset = df.dropna(subset=(config["dependent"])) #dropping na values #TODO: fix spectral model so that it can handle missing observations
     X = torch.linspace(0,1,len(dfsubset.index))
     if config["take_log"]==True:
-        dependent = np.log(dfsubset[config["dependent"]].values)
-    else:
-        dependent = dfsubset[config["dependent"]].values
+        dfsubset[config["dependent"]] = np.log(dfsubset[config["dependent"]])
+    elif config["take_cube_root"]==True:
+        dfsubset[config["dependent"]] = np.power(dfsubset[config["dependent"]],1/3)
+
+    dependent = dfsubset[config["dependent"]].values
     y = torch.tensor(dependent, dtype=torch.float32)
 
     # #defining training data based on testing split
@@ -36,9 +38,9 @@ if __name__ == '__main__':
 
     print(X_train)
     print(y_train)
-    # likelihood = gpytorch.likelihoods.GaussianLikelihood()
-    likelihood = gpytorch.likelihoods.GaussianLikelihoodWithMissingObs(noise_prior=gpytorch.priors.NormalPrior(config["noise_prior_loc"],
-                                                                      config["noise_prior_scale"]))
+    likelihood = gpytorch.likelihoods.GaussianLikelihood()
+    # likelihood = gpytorch.likelihoods.GaussianLikelihoodWithMissingObs(noise_prior=gpytorch.priors.NormalPrior(config["noise_prior_loc"],
+    #                                                                   config["noise_prior_scale"]))
     # model = models.seasonalGP_model.seasonalGPModel(X_train, y_train,
     #                                                 likelihood,
     #                                                 wandb.config.num_dims,

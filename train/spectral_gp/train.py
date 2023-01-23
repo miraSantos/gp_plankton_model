@@ -1,8 +1,15 @@
-import os, sys, argparse
+import os, sys, argparse, math, torch
 sys.path.append(os.getcwd())
 
 from utils.train_utils import *
 import wandb  # library for tracking and visualization
+
+from matplotlib import pyplot as plt
+
+from models.sebastian_spectral import SMKernelGP
+# from smk.train import train
+# from smk.plots import plot_density, plot_kernel, save_plot
+
 
 
 if __name__ == '__main__':

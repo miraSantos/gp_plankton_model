@@ -23,7 +23,7 @@ if __name__ == '__main__':
     df = pd.read_csv(config["data_path"], low_memory=False)
     df.loc[:,'date'] = pd.to_datetime(df.loc[:,'date'], format="%Y-%m-%d") #required or else dates start at 1971! (WEIRD BUG HERE)
     dfsubset = df.dropna(subset=config["dependent"]) #dropping na values #TODO: fix spectral model so that it can handle missing observations
-    X = torch.linspace(0,1,len(dfsubset.index))
+    X = torch.linspace(0,10,len(dfsubset.index))
     if config["take_log"]==True:
         dependent = np.log(dfsubset[config["dependent"]].values)
     else:
